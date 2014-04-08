@@ -13,20 +13,19 @@ import org.vaadin.example.backend.entity.Customer;
 @Stateless
 public class CustomerServiceBean implements CustomerService {
 
-	@PersistenceContext(unitName = "example")
-	private EntityManager entityManager;
+    @PersistenceContext(unitName = "example")
+    private EntityManager entityManager;
 
-	@Override
-	public void storeCustomer(Customer customer) {
-	}
+    @Override
+    public void storeCustomer(Customer customer) {
+        entityManager.persist(customer);
+    }
 
-	@Override
-	public Collection<Customer> getAllCustomers() {
-		Customer customer = new Customer();
-		customer.setFirstName("a");
-		customer.setLastName("b");
-		customer.setBirthDate(new Date());
-
-		return Collections.singleton(customer);
-	}
+    @Override
+    public Collection<Customer> getAllCustomers() {
+        javax.persistence.criteria.CriteriaQuery cq = entityManager.
+                getCriteriaBuilder().createQuery();
+        cq.select(cq.from(Customer.class));
+        return entityManager.createQuery(cq).getResultList();
+    }
 }
