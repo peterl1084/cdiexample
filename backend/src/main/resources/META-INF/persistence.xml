@@ -6,7 +6,7 @@
 		<provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
 		<jta-data-source>jdbc/example-backend</jta-data-source>
 
-		<class>org.vaadin.example.backend.service.customer.Customer</class>
+		<class>org.vaadin.example.backend.entity.Customer</class>
 
 		<exclude-unlisted-classes>true</exclude-unlisted-classes>
 
