@@ -2,6 +2,7 @@ package org.vaadin.example.backend.service.customer;
 
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Date;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -21,6 +22,11 @@ public class CustomerServiceBean implements CustomerService {
 
 	@Override
 	public Collection<Customer> getAllCustomers() {
-		return Collections.emptySet();
+		Customer customer = new Customer();
+		customer.setFirstName("a");
+		customer.setLastName("b");
+		customer.setBirthDate(new Date());
+
+		return Collections.singleton(customer);
 	}
 }
