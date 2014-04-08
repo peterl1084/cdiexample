@@ -4,9 +4,7 @@
 	xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
 	<persistence-unit name="example"
 		transaction-type="JTA">
-		<!-- <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider> -->
-
-		<provider>org.hibernate.ejb.HibernatePersistence</provider>
+		
 		<jta-data-source>jdbc/example-backend</jta-data-source>
 
 		<class>org.vaadin.example.backend.entity.Customer</class>
