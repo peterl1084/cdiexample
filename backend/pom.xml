@@ -8,7 +8,7 @@
 	</parent>
 	<artifactId>backend</artifactId>
 	<name>Backend business logic project</name>
-	<packaging>ejb</packaging>
+	<packaging>jar</packaging>
 
 	<dependencies>
 		<dependency>
