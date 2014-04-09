@@ -7,9 +7,11 @@ import org.vaadin.maddon.fields.MTextField;
 import org.vaadin.maddon.form.AbstractForm;
 import org.vaadin.maddon.layouts.MVerticalLayout;
 
+import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.DateField;
 import com.vaadin.ui.FormLayout;
+import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.TextField;
 
 public class CustomerForm extends AbstractForm<Customer> {
@@ -57,10 +59,17 @@ public class CustomerForm extends AbstractForm<Customer> {
 		FormLayout formLayout = new FormLayout(firstName, lastName, birthDate);
 		formLayout.setSizeFull();
 
-		layout.addComponent(formLayout);
-		layout.addComponent(getToolbar());
+		for (Component component : formLayout) {
+			component.setWidth(100, Unit.PERCENTAGE);
+		}
 
-		layout.setExpandRatio(formLayout, 1);
+		layout.addComponent(formLayout);
+
+		HorizontalLayout toolbar = getToolbar();
+		layout.addComponent(toolbar);
+
+		layout.expand(formLayout);
+		layout.setComponentAlignment(toolbar, Alignment.BOTTOM_RIGHT);
 
 		return layout;
 	}
