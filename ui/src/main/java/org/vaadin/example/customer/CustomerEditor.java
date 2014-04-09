@@ -26,8 +26,8 @@ public class CustomerEditor extends Window {
 
 	public void openForCustomer(Customer customer) {
 		customerForm.setEntity(customer);
-		customerForm.focusFirst();
 		UI.getCurrent().addWindow(this);
+		customerForm.focusFirst();
 	}
 
 }
