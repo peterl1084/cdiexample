@@ -87,4 +87,9 @@ public class LoginViewImpl extends AbstractView<LoginViewPresenter> implements
 	protected LoginViewPresenter generatePresenter() {
 		return presenterInstance.get();
 	}
+
+	@Override
+	public String getName() {
+		return "Login";
+	}
 }

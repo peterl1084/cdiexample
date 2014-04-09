@@ -9,10 +9,9 @@ import javax.inject.Inject;
 
 import org.vaadin.example.AbstractView;
 import org.vaadin.example.backend.entity.Customer;
-import org.vaadin.maddon.label.Header;
-import org.vaadin.maddon.layouts.MVerticalLayout;
 
 import com.vaadin.cdi.CDIView;
+import com.vaadin.ui.VerticalLayout;
 
 @CDIView("customers")
 @RolesAllowed({ "admin", "user" })
@@ -32,14 +31,13 @@ public class CustomerViewImpl extends AbstractView<CustomerViewPresenter>
 
 	@PostConstruct
 	protected void init() {
-		MVerticalLayout layout = new MVerticalLayout();
+		VerticalLayout layout = new VerticalLayout();
 		layout.setSizeFull();
+		layout.setMargin(true);
 		layout.setSpacing(true);
 
+		layout.addComponent(customerTable);
 		customerTable.setSizeFull();
-		layout.addComponents(new Header("Customers"), customerTable);
-
-		layout.setExpandRatio(customerTable, 1);
 
 		setCompositionRoot(layout);
 	}
@@ -63,5 +61,10 @@ public class CustomerViewImpl extends AbstractView<CustomerViewPresenter>
 	public void closeEditor() {
 		customerTable.removeSelection();
 		customerEditor.close();
+	}
+
+	@Override
+	public String getName() {
+		return "Customers";
 	}
 }
