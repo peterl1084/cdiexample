@@ -13,6 +13,7 @@ import org.vaadin.maddon.layouts.MVerticalLayout;
 
 import com.vaadin.event.ItemClickEvent;
 import com.vaadin.event.ItemClickEvent.ItemClickListener;
+import com.vaadin.server.FontAwesome;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
@@ -105,10 +106,13 @@ public class CustomerTable extends CustomComponent {
 		customerTable.setSizeFull();
 
 		addCustomer = new Button("Add", addClickListener);
+                addCustomer.setIcon(FontAwesome.PLUS);
 		removeCustomer = new ConfirmButton("Remove",
 				"Are you sure you want to remove this customer?",
 				removeClickListener);
+                removeCustomer.setIcon(FontAwesome.MINUS);
 		editCustomer = new Button("Edit", editClickListener);
+                editCustomer.setIcon(FontAwesome.PENCIL_SQUARE);
 
 		removeCustomer.setEnabled(false);
 		editCustomer.setEnabled(false);
