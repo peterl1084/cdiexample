@@ -5,6 +5,7 @@ import javax.inject.Inject;
 
 import org.vaadin.example.backend.entity.Customer;
 
+import com.vaadin.event.ShortcutAction.KeyCode;
 import com.vaadin.ui.CustomComponent;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
@@ -43,12 +44,15 @@ public class CustomerEditor extends CustomComponent {
 		window.setCaption("Customer editor");
 		window.setWidth(400, Unit.PIXELS);
 		window.setHeight(500, Unit.PIXELS);
+		window.setCloseShortcut(KeyCode.ESCAPE);
 
 		window.center();
 		window.setModal(true);
+		window.setResizable(false);
 
 		window.setContent(this);
 		UI.getCurrent().addWindow(window);
+		window.focus();
 	}
 
 	public void close() {
