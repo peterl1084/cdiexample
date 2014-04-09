@@ -8,7 +8,6 @@ import org.vaadin.example.backend.entity.Customer;
 import com.vaadin.event.ShortcutAction.KeyCode;
 import com.vaadin.ui.CustomComponent;
 import com.vaadin.ui.UI;
-import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
 
 public class CustomerEditor extends CustomComponent {
@@ -24,13 +23,7 @@ public class CustomerEditor extends CustomComponent {
 		setSizeFull();
 		customerForm.setSizeFull();
 
-		VerticalLayout layout = new VerticalLayout();
-		layout.setSizeFull();
-
-		layout.addComponent(customerForm);
-		layout.setExpandRatio(customerForm, 1);
-
-		setCompositionRoot(layout);
+		setCompositionRoot(customerForm);
 	}
 
 	public void openForCustomer(Customer customer) {
@@ -46,13 +39,14 @@ public class CustomerEditor extends CustomComponent {
 		window.setHeight(500, Unit.PIXELS);
 		window.setCloseShortcut(KeyCode.ESCAPE);
 
-		window.center();
 		window.setModal(true);
 		window.setResizable(false);
 
 		window.setContent(this);
 		UI.getCurrent().addWindow(window);
 		window.focus();
+
+		customerForm.focusFirst();
 	}
 
 	public void close() {

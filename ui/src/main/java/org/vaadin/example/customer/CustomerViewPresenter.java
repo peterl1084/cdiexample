@@ -30,6 +30,7 @@ public class CustomerViewPresenter extends AbstractPresenter<CustomerView> {
 
 	public void onNewCustomer(
 			@Observes(notifyObserver = Reception.IF_EXISTS) CustomerAddedEvent event) {
+		getView().removeTableSelection();
 		getView().openEditorFor(new Customer());
 	}
 

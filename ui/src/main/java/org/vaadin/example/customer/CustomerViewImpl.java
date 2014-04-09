@@ -66,4 +66,9 @@ public class CustomerViewImpl extends AbstractView<CustomerViewPresenter>
 	public String getName() {
 		return "Customers";
 	}
+
+	@Override
+	public void removeTableSelection() {
+		customerTable.removeSelection();
+	}
 }

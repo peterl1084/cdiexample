@@ -9,14 +9,15 @@ import org.vaadin.maddon.button.ConfirmButton;
 import org.vaadin.maddon.fields.MTable;
 import org.vaadin.maddon.fields.MValueChangeEvent;
 import org.vaadin.maddon.fields.MValueChangeListener;
+import org.vaadin.maddon.layouts.MVerticalLayout;
 
 import com.vaadin.event.ItemClickEvent;
 import com.vaadin.event.ItemClickEvent.ItemClickListener;
+import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.CustomComponent;
 import com.vaadin.ui.HorizontalLayout;
-import com.vaadin.ui.VerticalLayout;
 
 public class CustomerTable extends CustomComponent {
 
@@ -84,7 +85,7 @@ public class CustomerTable extends CustomComponent {
 		}
 	};
 
-	private VerticalLayout layout;
+	private MVerticalLayout layout;
 
 	private MTable<Customer> customerTable;
 
@@ -95,9 +96,7 @@ public class CustomerTable extends CustomComponent {
 	public CustomerTable() {
 		setSizeFull();
 
-		layout = new VerticalLayout();
-		layout.setSpacing(true);
-		layout.setSizeFull();
+		layout = new MVerticalLayout().withFullHeight();
 
 		customerTable = new MTable<>(Customer.class);
 		customerTable.addMValueChangeListener(tableValueChangeListener);
@@ -119,8 +118,10 @@ public class CustomerTable extends CustomComponent {
 
 		buttonLayout.addComponents(addCustomer, removeCustomer, editCustomer);
 
-		layout.addComponents(customerTable, buttonLayout);
-		layout.setExpandRatio(customerTable, 1);
+		layout.addComponents(buttonLayout, customerTable);
+		layout.expand(customerTable);
+
+		layout.setComponentAlignment(buttonLayout, Alignment.TOP_RIGHT);
 
 		setCompositionRoot(layout);
 	}
@@ -132,8 +133,6 @@ public class CustomerTable extends CustomComponent {
 	}
 
 	public void removeSelection() {
-		customerTable.removeMValueChangeListener(tableValueChangeListener);
 		customerTable.setValue(null);
-		customerTable.addMValueChangeListener(tableValueChangeListener);
 	}
 }
