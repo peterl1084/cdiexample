@@ -20,6 +20,7 @@ import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Notification;
+import com.vaadin.ui.Panel;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.themes.ChameleonTheme;
@@ -65,7 +66,7 @@ public class VaadinUI extends UI {
 		topBar.setExpandRatio(logout, 1);
 		topBar.setComponentAlignment(logout, Alignment.TOP_RIGHT);
 
-		VerticalLayout content = new VerticalLayout();
+		Panel content = new Panel();
 		content.setSizeFull();
 
 		layout.addComponents(topBar, content);
