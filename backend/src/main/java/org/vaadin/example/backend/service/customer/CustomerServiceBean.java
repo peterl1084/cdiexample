@@ -1,10 +1,13 @@
 package org.vaadin.example.backend.service.customer;
 
 import java.util.Collection;
+import java.util.Date;
+import java.util.List;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.criteria.CriteriaQuery;
 
 import org.vaadin.example.backend.entity.Customer;
 
@@ -16,14 +19,34 @@ public class CustomerServiceBean implements CustomerService {
 
 	@Override
 	public void storeCustomer(Customer customer) {
-		entityManager.persist(customer);
+		if (customer.isPersisted()) {
+			entityManager.merge(customer);
+		} else {
+			entityManager.persist(customer);
+		}
 	}
 
 	@Override
 	public Collection<Customer> getAllCustomers() {
-		javax.persistence.criteria.CriteriaQuery cq = entityManager
-				.getCriteriaBuilder().createQuery();
+		CriteriaQuery<Customer> cq = entityManager.getCriteriaBuilder()
+				.createQuery(Customer.class);
 		cq.select(cq.from(Customer.class));
-		return entityManager.createQuery(cq).getResultList();
+		List<Customer> resultList = entityManager.createQuery(cq)
+				.getResultList();
+
+		if (resultList.isEmpty()) {
+			resultList.add(createTestCustomer());
+		}
+
+		return resultList;
+	}
+
+	private Customer createTestCustomer() {
+		Customer customer = new Customer();
+		customer.setFirstName("a");
+		customer.setLastName("b");
+		customer.setBirthDate(new Date());
+
+		return customer;
 	}
 }
