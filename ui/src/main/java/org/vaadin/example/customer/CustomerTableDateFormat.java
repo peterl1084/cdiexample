@@ -7,6 +7,7 @@ import java.util.Locale;
 import com.vaadin.data.util.converter.Converter;
 
 public class CustomerTableDateFormat implements Converter<String, Date> {
+	private static final long serialVersionUID = 1677781768925921655L;
 
 	@Override
 	public Date convertToModel(String value, Class<? extends Date> targetType,
@@ -20,7 +21,12 @@ public class CustomerTableDateFormat implements Converter<String, Date> {
 			Class<? extends String> targetType, Locale locale)
 			throws com.vaadin.data.util.converter.Converter.ConversionException {
 		SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
-		return sdf.format(value);
+
+		if (value != null) {
+			return sdf.format(value);
+		}
+
+		return null;
 	}
 
 	@Override
