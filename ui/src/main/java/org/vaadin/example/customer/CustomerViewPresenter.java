@@ -25,22 +25,25 @@ public class CustomerViewPresenter extends AbstractPresenter<CustomerView> {
 			@Observes(notifyObserver = Reception.IF_EXISTS) CustomerSavedEvent event) {
 		customerService.storeCustomer(event.getCustomer());
 		getView().populateCustomers(customerService.getAllCustomers());
-		getView().setCustomer(null);
+		getView().closeEditor();
 	}
 
 	public void onNewCustomer(
 			@Observes(notifyObserver = Reception.IF_EXISTS) CustomerAddedEvent event) {
-		getView().setCustomer(null);
-		getView().setCustomer(new Customer());
+		getView().openEditorFor(new Customer());
 	}
 
 	public void onCustomerSelected(
 			@Observes(notifyObserver = Reception.IF_EXISTS) CustomerSelectedEvent event) {
-		getView().setCustomer(event.getCustomer());
+		if (event.getCustomer() == null) {
+			getView().closeEditor();
+		} else {
+			getView().openEditorFor(event.getCustomer());
+		}
 	}
 
 	public void onCustomerReset(
 			@Observes(notifyObserver = Reception.IF_EXISTS) CustomerResetEvent event) {
-		getView().setCustomer(null);
+		getView().closeEditor();
 	}
 }

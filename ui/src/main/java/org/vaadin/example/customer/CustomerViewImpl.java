@@ -22,7 +22,7 @@ public class CustomerViewImpl extends AbstractView<CustomerViewPresenter>
 	private static final long serialVersionUID = 5444758032985372913L;
 
 	@Inject
-	private CustomerForm form;
+	private CustomerEditor customerEditor;
 
 	@Inject
 	private CustomerTable customerTable;
@@ -33,11 +33,13 @@ public class CustomerViewImpl extends AbstractView<CustomerViewPresenter>
 	@PostConstruct
 	protected void init() {
 		MVerticalLayout layout = new MVerticalLayout();
+		layout.setSizeFull();
 		layout.setSpacing(true);
 
-		form.setVisible(false);
+		customerTable.setSizeFull();
+		layout.addComponents(new Header("Customers"), customerTable);
 
-		layout.addComponents(new Header("Customers"), customerTable, form);
+		layout.setExpandRatio(customerTable, 1);
 
 		setCompositionRoot(layout);
 	}
@@ -53,11 +55,13 @@ public class CustomerViewImpl extends AbstractView<CustomerViewPresenter>
 	}
 
 	@Override
-	public void setCustomer(Customer customer) {
-		form.setEntity(customer);
+	public void openEditorFor(Customer customer) {
+		customerEditor.openForCustomer(customer);
+	}
 
-		if (customer == null) {
-			customerTable.removeSelection();
-		}
+	@Override
+	public void closeEditor() {
+		customerTable.removeSelection();
+		customerEditor.close();
 	}
 }

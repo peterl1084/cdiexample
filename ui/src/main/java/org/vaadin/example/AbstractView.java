@@ -13,6 +13,10 @@ public abstract class AbstractView<P extends AbstractPresenter> extends
 
 	private P presenter;
 
+	public AbstractView() {
+		setSizeFull();
+	}
+
 	@Override
 	public void enter(ViewChangeEvent event) {
 		presenter.onViewEnter();

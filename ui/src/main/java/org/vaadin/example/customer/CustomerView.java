@@ -9,5 +9,7 @@ public interface CustomerView extends ApplicationView<CustomerViewPresenter> {
 
 	void populateCustomers(Collection<Customer> customers);
 
-	void setCustomer(Customer customer);
+	void openEditorFor(Customer customer);
+
+	void closeEditor();
 }

@@ -59,6 +59,7 @@ public class CustomerTable extends CustomComponent {
 		customerTable = new MTable<>(Customer.class);
 		customerTable.addMValueChangeListener(tableValueChangeListener);
 		customerTable.setConverter("birthDate", new CustomerTableDateFormat());
+		customerTable.setSizeFull();
 
 		addCustomer = new Button("Add Customer", addClickListener);
 

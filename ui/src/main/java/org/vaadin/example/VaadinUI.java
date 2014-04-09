@@ -58,6 +58,7 @@ public class VaadinUI extends UI {
 
 		topBar = new HorizontalLayout();
 		topBar.setWidth(100, Unit.PERCENTAGE);
+		topBar.setMargin(true);
 
 		logout = new Button("Logout", logoutClickListener);
 		logout.setStyleName(ChameleonTheme.BUTTON_LINK);

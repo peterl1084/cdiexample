@@ -51,7 +51,17 @@ public class CustomerForm extends AbstractForm<Customer> {
 
 	@Override
 	protected Component createContent() {
-		return new MVerticalLayout(new FormLayout(firstName, lastName,
-				birthDate), getToolbar());
+		MVerticalLayout layout = new MVerticalLayout();
+		layout.setSizeFull();
+
+		FormLayout formLayout = new FormLayout(firstName, lastName, birthDate);
+		formLayout.setSizeFull();
+
+		layout.addComponent(formLayout);
+		layout.addComponent(getToolbar());
+
+		layout.setExpandRatio(formLayout, 1);
+
+		return layout;
 	}
 }
