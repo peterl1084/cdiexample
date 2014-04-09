@@ -21,9 +21,11 @@ public class CustomerViewPresenter extends AbstractPresenter<CustomerView> {
 		getView().populateCustomers(customerService.getAllCustomers());
 	}
 
-	public void onCustomerSaved(Customer entity) {
-		customerService.storeCustomer(entity);
+	public void onCustomerSaved(
+			@Observes(notifyObserver = Reception.IF_EXISTS) CustomerSavedEvent event) {
+		customerService.storeCustomer(event.getCustomer());
 		getView().populateCustomers(customerService.getAllCustomers());
+		getView().setCustomer(null);
 	}
 
 	public void onNewCustomer(

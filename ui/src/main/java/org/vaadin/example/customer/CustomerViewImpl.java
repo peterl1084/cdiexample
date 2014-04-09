@@ -9,7 +9,6 @@ import javax.inject.Inject;
 
 import org.vaadin.example.AbstractView;
 import org.vaadin.example.backend.entity.Customer;
-import org.vaadin.maddon.form.AbstractForm;
 import org.vaadin.maddon.label.Header;
 import org.vaadin.maddon.layouts.MVerticalLayout;
 
@@ -31,20 +30,11 @@ public class CustomerViewImpl extends AbstractView<CustomerViewPresenter>
 	@Inject
 	private Instance<CustomerViewPresenter> presenterInstance;
 
-	private AbstractForm.SavedHandler<Customer> formSaveHandler = new AbstractForm.SavedHandler<Customer>() {
-
-		@Override
-		public void onSave(Customer entity) {
-			getPresenter().onCustomerSaved(entity);
-		}
-	};
-
 	@PostConstruct
 	protected void init() {
 		MVerticalLayout layout = new MVerticalLayout();
 		layout.setSpacing(true);
 
-		form.setSavedHandler(formSaveHandler);
 		form.setVisible(false);
 
 		layout.addComponents(new Header("Customers"), customerTable, form);
