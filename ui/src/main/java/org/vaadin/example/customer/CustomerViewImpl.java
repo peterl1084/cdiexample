@@ -8,7 +8,6 @@ import javax.enterprise.inject.Instance;
 import javax.inject.Inject;
 
 import org.vaadin.example.AbstractView;
-import org.vaadin.example.CustomerMaddonForm;
 import org.vaadin.example.backend.entity.Customer;
 import org.vaadin.maddon.form.AbstractForm;
 import org.vaadin.maddon.label.Header;
@@ -24,7 +23,7 @@ public class CustomerViewImpl extends AbstractView<CustomerViewPresenter>
 	private static final long serialVersionUID = 5444758032985372913L;
 
 	@Inject
-	private CustomerMaddonForm form;
+	private CustomerForm form;
 
 	@Inject
 	private CustomerTable customerTable;

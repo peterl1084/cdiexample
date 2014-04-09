@@ -1,4 +1,4 @@
-package org.vaadin.example;
+package org.vaadin.example.customer;
 
 import org.vaadin.example.backend.entity.Customer;
 import org.vaadin.maddon.fields.MTextField;
@@ -10,7 +10,7 @@ import com.vaadin.ui.DateField;
 import com.vaadin.ui.FormLayout;
 import com.vaadin.ui.TextField;
 
-public class CustomerMaddonForm extends AbstractForm<Customer> {
+public class CustomerForm extends AbstractForm<Customer> {
 	private static final long serialVersionUID = -1684898560662964709L;
 
 	TextField firstName = new MTextField("firstName");
