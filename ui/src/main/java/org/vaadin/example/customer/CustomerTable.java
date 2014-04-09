@@ -19,6 +19,7 @@ import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.CustomComponent;
 import com.vaadin.ui.HorizontalLayout;
+import org.vaadin.maddon.button.MButton;
 
 public class CustomerTable extends CustomComponent {
 
@@ -105,14 +106,13 @@ public class CustomerTable extends CustomComponent {
 		customerTable.setConverter("birthDate", new CustomerTableDateFormat());
 		customerTable.setSizeFull();
 
-		addCustomer = new Button("Add", addClickListener);
-                addCustomer.setIcon(FontAwesome.PLUS);
-		removeCustomer = new ConfirmButton("Remove",
+                addCustomer = new MButton(FontAwesome.PLUS, addClickListener);
+                
+		removeCustomer = new ConfirmButton(null,
 				"Are you sure you want to remove this customer?",
 				removeClickListener);
                 removeCustomer.setIcon(FontAwesome.MINUS);
-		editCustomer = new Button("Edit", editClickListener);
-                editCustomer.setIcon(FontAwesome.PENCIL_SQUARE);
+		editCustomer = new MButton(FontAwesome.PENCIL_SQUARE, editClickListener);
 
 		removeCustomer.setEnabled(false);
 		editCustomer.setEnabled(false);
