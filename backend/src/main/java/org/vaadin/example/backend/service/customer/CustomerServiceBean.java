@@ -18,7 +18,11 @@ public class CustomerServiceBean implements CustomerService {
 
     @Override
     public void storeCustomer(Customer customer) {
-        entityManager.persist(customer);
+        if (customer.isPersisted()) {
+            entityManager.merge(customer);
+        } else {
+            entityManager.persist(customer);
+        }
     }
 
     @Override
