@@ -1,6 +1,6 @@
 package org.vaadin.example;
 
-public interface ApplicationView<P extends AbstractPresenter<?>> {
+public interface ApplicationView<P extends AbstractPresenter> {
 
 	P getPresenter();
 
