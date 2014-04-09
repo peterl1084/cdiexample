@@ -60,7 +60,6 @@ public class VaadinUI extends UI {
 
 		logout = new Button("Logout", logoutClickListener);
 		logout.setStyleName(ChameleonTheme.BUTTON_LINK);
-		logout.setVisible(false);
 
 		topBar.addComponent(logout);
 		topBar.setExpandRatio(logout, 1);
@@ -79,6 +78,7 @@ public class VaadinUI extends UI {
 
 		if (!isLoggedIn()) {
 			navigator.navigateTo("");
+			logout.setVisible(false);
 		} else {
 			if (navigator.getState().isEmpty()) {
 				navigator.navigateTo("customers");
