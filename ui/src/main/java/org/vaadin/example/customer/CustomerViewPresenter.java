@@ -30,6 +30,7 @@ public class CustomerViewPresenter extends AbstractPresenter<CustomerView> {
 
 	public void onNewCustomer(
 			@Observes(notifyObserver = Reception.IF_EXISTS) CustomerAddedEvent event) {
+		getView().removeTableSelection();
 		getView().openEditorFor(new Customer());
 	}
 
@@ -45,5 +46,11 @@ public class CustomerViewPresenter extends AbstractPresenter<CustomerView> {
 	public void onCustomerReset(
 			@Observes(notifyObserver = Reception.IF_EXISTS) CustomerResetEvent event) {
 		getView().closeEditor();
+	}
+
+	public void onCustomerRemoved(
+			@Observes(notifyObserver = Reception.IF_EXISTS) CustomerRemovedEvent event) {
+		customerService.removeCustomer(event.getCustomer());
+		getView().populateCustomers(customerService.getAllCustomers());
 	}
 }

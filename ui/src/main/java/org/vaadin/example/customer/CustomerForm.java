@@ -64,4 +64,8 @@ public class CustomerForm extends AbstractForm<Customer> {
 
 		return layout;
 	}
+
+	public void focusFirst() {
+		firstName.focus();
+	}
 }
