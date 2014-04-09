@@ -12,6 +12,10 @@ Stuff that this app is built on:
  * MVP
  * The new Valo theme for Vaadin to make it look modern
  
- ## To get started (plaining with this app in your dev environment):
+## To get started (plaining with this app in your dev environment):
+
+Build should be IDE/platform indendent. So just
  
- * Configure your development server (e.g. GlassFish or WildFly) to contain data sources 
+ * Configure your development server (e.g. GlassFish or WildFly) to contain data source "jdbc/example-backend"
+ * Build + Run/Debug
+
