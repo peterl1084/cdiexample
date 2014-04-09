@@ -25,6 +25,7 @@ public class CustomerViewPresenter extends AbstractPresenter<CustomerView> {
 			@Observes(notifyObserver = Reception.IF_EXISTS) CustomerSavedEvent event) {
 		customerService.storeCustomer(event.getCustomer());
 		getView().populateCustomers(customerService.getAllCustomers());
+		getView().removeTableSelection();
 		getView().closeEditor();
 	}
 

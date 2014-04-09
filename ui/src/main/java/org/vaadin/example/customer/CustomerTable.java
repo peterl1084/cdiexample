@@ -6,6 +6,7 @@ import javax.inject.Inject;
 
 import org.vaadin.example.backend.entity.Customer;
 import org.vaadin.maddon.button.ConfirmButton;
+import org.vaadin.maddon.button.MButton;
 import org.vaadin.maddon.fields.MTable;
 import org.vaadin.maddon.fields.MValueChangeEvent;
 import org.vaadin.maddon.fields.MValueChangeListener;
@@ -19,7 +20,6 @@ import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.CustomComponent;
 import com.vaadin.ui.HorizontalLayout;
-import org.vaadin.maddon.button.MButton;
 
 public class CustomerTable extends CustomComponent {
 
@@ -106,12 +106,12 @@ public class CustomerTable extends CustomComponent {
 		customerTable.setConverter("birthDate", new CustomerTableDateFormat());
 		customerTable.setSizeFull();
 
-                addCustomer = new MButton(FontAwesome.PLUS, addClickListener);
-                
+		addCustomer = new MButton(FontAwesome.PLUS, addClickListener);
+
 		removeCustomer = new ConfirmButton(null,
 				"Are you sure you want to remove this customer?",
 				removeClickListener);
-                removeCustomer.setIcon(FontAwesome.MINUS);
+		removeCustomer.setIcon(FontAwesome.MINUS);
 		editCustomer = new MButton(FontAwesome.PENCIL_SQUARE, editClickListener);
 
 		removeCustomer.setEnabled(false);

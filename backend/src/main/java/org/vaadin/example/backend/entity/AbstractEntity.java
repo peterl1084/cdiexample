@@ -4,6 +4,7 @@ import java.util.UUID;
 
 import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;
+import javax.persistence.Version;
 
 /**
  * AbstractEntity is abstract base class for all business entities. It defines
@@ -17,6 +18,10 @@ public abstract class AbstractEntity {
 
 	@Column(name = "UUID", nullable = false, unique = true)
 	private String uuid;
+
+	@Version
+	@Column(name = "Revision")
+	private long revision;
 
 	public AbstractEntity() {
 		uuid = UUID.randomUUID().toString();
