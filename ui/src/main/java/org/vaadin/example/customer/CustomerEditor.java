@@ -6,53 +6,28 @@ import javax.inject.Inject;
 import org.vaadin.example.backend.entity.Customer;
 
 import com.vaadin.event.ShortcutAction.KeyCode;
-import com.vaadin.ui.CustomComponent;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.Window;
 
-public class CustomerEditor extends CustomComponent {
+public class CustomerEditor extends Window {
 	private static final long serialVersionUID = -7461517292586081314L;
-
-	private Window window;
 
 	@Inject
 	private CustomerForm customerForm;
 
 	@PostConstruct
 	protected void init() {
-		setSizeFull();
-		customerForm.setSizeFull();
-
-		setCompositionRoot(customerForm);
+		setCaption("Customer editor");
+		setCloseShortcut(KeyCode.ESCAPE);
+		setModal(true);
+		setResizable(false);
+                setContent(customerForm);
 	}
 
 	public void openForCustomer(Customer customer) {
 		customerForm.setEntity(customer);
-
-		if (window != null) {
-			window.close();
-		}
-
-		window = new Window();
-		window.setCaption("Customer editor");
-		window.setWidth(400, Unit.PIXELS);
-		window.setHeight(500, Unit.PIXELS);
-		window.setCloseShortcut(KeyCode.ESCAPE);
-
-		window.setModal(true);
-		window.setResizable(false);
-
-		window.setContent(this);
-		UI.getCurrent().addWindow(window);
-		window.focus();
-
 		customerForm.focusFirst();
+		UI.getCurrent().addWindow(this);
 	}
 
-	public void close() {
-		if (window != null) {
-			window.close();
-			window = null;
-		}
-	}
 }

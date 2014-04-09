@@ -9,86 +9,72 @@ import com.vaadin.ui.Notification.Type;
 import com.vaadin.ui.Panel;
 import com.vaadin.ui.PasswordField;
 import com.vaadin.ui.TextField;
-import com.vaadin.ui.VerticalLayout;
 import javax.enterprise.inject.Instance;
 import javax.inject.Inject;
 import org.vaadin.example.AbstractView;
 import org.vaadin.maddon.button.PrimaryButton;
+import org.vaadin.maddon.fields.MTextField;
+import org.vaadin.maddon.layouts.MVerticalLayout;
 
 @CDIView
 public class LoginViewImpl extends AbstractView<LoginViewPresenter> implements
-		LoginView {
+        LoginView {
 
-	private static final long serialVersionUID = -1717018541782513599L;
+    @Inject
+    private Instance<LoginViewPresenter> presenterInstance;
 
-	private final VerticalLayout layout;
+    private final Button.ClickListener loginClickListener = new Button.ClickListener() {
+        private static final long serialVersionUID = 7742015379096464563L;
 
-	private final TextField username;
-	private final PasswordField password;
+        @Override
+        public void buttonClick(ClickEvent event) {
+            getPresenter().onLoginPressed(username.getValue(),
+                    password.getValue());
+        }
+    };
 
-	private final Button login;
+    private final TextField username = new MTextField()
+            .withInputPrompt("User name");
+    private final PasswordField password = new PasswordField();
 
-	@Inject
-	private Instance<LoginViewPresenter> presenterInstance;
+    private final Button login = new PrimaryButton("Login", loginClickListener);
 
-	private final Button.ClickListener loginClickListener = new Button.ClickListener() {
-		private static final long serialVersionUID = 7742015379096464563L;
+    public LoginViewImpl() {
+        setSizeFull();
 
-		@Override
-		public void buttonClick(ClickEvent event) {
-			getPresenter().onLoginPressed(username.getValue(),
-					password.getValue());
-		}
-	};
+        // TODO remove these prefilled values used for testing
+        username.setValue("admin");
+        password.setValue("password");
+        password.focus();
 
-	public LoginViewImpl() {
-		setSizeFull();
+        Panel loginPanel = new Panel("Login to application");
+        loginPanel.setSizeUndefined();
 
-		layout = new VerticalLayout();
-		layout.setSizeFull();
+        loginPanel.setContent(
+                new MVerticalLayout(
+                        username,
+                        password,
+                        login
+                ).withAlign(login, Alignment.BOTTOM_RIGHT)
+        );
 
-		Panel loginPanel = new Panel("Login to application");
-		loginPanel.setWidth(250, Unit.PIXELS);
+        setCompositionRoot(new MVerticalLayout(loginPanel)
+                .withAlign(loginPanel, Alignment.MIDDLE_CENTER).withFullHeight());
+    }
 
-		VerticalLayout panelContent = new VerticalLayout();
-		panelContent.setWidth(100, Unit.PERCENTAGE);
-		panelContent.setMargin(true);
-		panelContent.setSpacing(true);
+    @Override
+    public void showInvalidLoginNotification() {
+        Notification.show("Login failed", "Invalid credentials",
+                Type.TRAY_NOTIFICATION);
+    }
 
-		username = new TextField();
-		username.setWidth(100, Unit.PERCENTAGE);
-		username.setInputPrompt("User name");
+    @Override
+    protected LoginViewPresenter generatePresenter() {
+        return presenterInstance.get();
+    }
 
-		password = new PasswordField();
-		password.setWidth(100, Unit.PERCENTAGE);
-		password.setInputPrompt("Password");
-
-		login = new PrimaryButton("Login", loginClickListener);
-
-		panelContent.addComponents(username, password, login);
-		panelContent.setComponentAlignment(login, Alignment.BOTTOM_RIGHT);
-
-		loginPanel.setContent(panelContent);
-
-		layout.addComponent(loginPanel);
-		layout.setComponentAlignment(loginPanel, Alignment.MIDDLE_CENTER);
-
-		setCompositionRoot(layout);
-	}
-
-	@Override
-	public void showInvalidLoginNotification() {
-		Notification.show("Login failed", "Invalid credentials",
-				Type.TRAY_NOTIFICATION);
-	}
-
-	@Override
-	protected LoginViewPresenter generatePresenter() {
-		return presenterInstance.get();
-	}
-
-	@Override
-	public String getName() {
-		return "Login";
-	}
+    @Override
+    public String getName() {
+        return "Login";
+    }
 }

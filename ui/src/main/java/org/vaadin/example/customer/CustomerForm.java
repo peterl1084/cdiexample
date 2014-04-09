@@ -11,70 +11,54 @@ import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.DateField;
 import com.vaadin.ui.FormLayout;
-import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.TextField;
 
 public class CustomerForm extends AbstractForm<Customer> {
-	private static final long serialVersionUID = -1684898560662964709L;
 
-	private TextField firstName;
-	private TextField lastName;
-	private DateField birthDate;
+    private static final long serialVersionUID = -1684898560662964709L;
 
-	@Inject
-	private javax.enterprise.event.Event<CustomerSavedEvent> saveEvent;
+    private TextField firstName = new MTextField("firstName");
+    private TextField lastName = new MTextField("lastName");
+    private DateField birthDate = new DateField("birthDate");
 
-	@Inject
-	private javax.enterprise.event.Event<CustomerResetEvent> resetEvent;
+    @Inject
+    private javax.enterprise.event.Event<CustomerSavedEvent> saveEvent;
 
-	private AbstractForm.SavedHandler<Customer> formSaveHandler = new AbstractForm.SavedHandler<Customer>() {
-		@Override
-		public void onSave(Customer customer) {
-			saveEvent.fire(new CustomerSavedEvent(customer));
-		}
-	};
+    @Inject
+    private javax.enterprise.event.Event<CustomerResetEvent> resetEvent;
 
-	private AbstractForm.ResetHandler<Customer> formResetHandler = new AbstractForm.ResetHandler<Customer>() {
+    private AbstractForm.SavedHandler<Customer> formSaveHandler = new AbstractForm.SavedHandler<Customer>() {
+        @Override
+        public void onSave(Customer customer) {
+            saveEvent.fire(new CustomerSavedEvent(customer));
+        }
+    };
 
-		@Override
-		public void onReset(Customer entity) {
-			resetEvent.fire(new CustomerResetEvent());
-		}
-	};
+    private AbstractForm.ResetHandler<Customer> formResetHandler = new AbstractForm.ResetHandler<Customer>() {
 
-	public CustomerForm() {
-		firstName = new MTextField("firstName");
-		lastName = new MTextField("lastName");
-		birthDate = new DateField("birthDate");
+        @Override
+        public void onReset(Customer entity) {
+            resetEvent.fire(new CustomerResetEvent());
+        }
+    };
 
-		setSavedHandler(formSaveHandler);
-		setResetHandler(formResetHandler);
-	}
+    public CustomerForm() {
+        setSavedHandler(formSaveHandler);
+        setResetHandler(formResetHandler);
+    }
 
-	@Override
-	protected Component createContent() {
-		MVerticalLayout layout = new MVerticalLayout();
-		layout.setSizeFull();
+    @Override
+    protected Component createContent() {
+        FormLayout formLayout = new FormLayout(firstName, lastName, birthDate);
+        formLayout.setSizeFull();
+        formLayout.setMargin(false);
+        for (Component component : formLayout) {
+            component.setWidth(100, Unit.PERCENTAGE);
+        }
 
-		FormLayout formLayout = new FormLayout(firstName, lastName, birthDate);
-		formLayout.setSizeFull();
+        return new MVerticalLayout(formLayout)
+                .add(getToolbar(), Alignment.BOTTOM_RIGHT)
+                .expand(formLayout);
+    }
 
-		for (Component component : formLayout) {
-			component.setWidth(100, Unit.PERCENTAGE);
-		}
-
-		layout.addComponent(formLayout);
-
-		HorizontalLayout toolbar = getToolbar();
-		layout.addComponent(toolbar);
-
-		layout.expand(formLayout);
-		layout.setComponentAlignment(toolbar, Alignment.BOTTOM_RIGHT);
-
-		return layout;
-	}
-
-	public void focusFirst() {
-		firstName.focus();
-	}
 }
