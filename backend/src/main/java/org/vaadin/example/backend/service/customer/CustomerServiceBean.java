@@ -35,4 +35,10 @@ public class CustomerServiceBean implements CustomerService {
 
 		return resultList;
 	}
+
+	@Override
+	public void removeCustomer(Customer customer) {
+		customer = entityManager.getReference(Customer.class, customer.getId());
+		entityManager.remove(customer);
+	}
 }

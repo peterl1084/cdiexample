@@ -59,7 +59,6 @@ public class CustomerViewImpl extends AbstractView<CustomerViewPresenter>
 
 	@Override
 	public void closeEditor() {
-		customerTable.removeSelection();
 		customerEditor.close();
 	}
 

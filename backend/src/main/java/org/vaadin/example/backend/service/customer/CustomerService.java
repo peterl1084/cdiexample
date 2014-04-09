@@ -20,4 +20,11 @@ public interface CustomerService {
 	 * @return retrieves all customers
 	 */
 	Collection<Customer> getAllCustomers();
+
+	/**
+	 * Removes given customer
+	 * 
+	 * @param customer
+	 */
+	void removeCustomer(Customer customer);
 }

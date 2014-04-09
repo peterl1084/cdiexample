@@ -46,4 +46,10 @@ public class CustomerViewPresenter extends AbstractPresenter<CustomerView> {
 			@Observes(notifyObserver = Reception.IF_EXISTS) CustomerResetEvent event) {
 		getView().closeEditor();
 	}
+
+	public void onCustomerRemoved(
+			@Observes(notifyObserver = Reception.IF_EXISTS) CustomerRemovedEvent event) {
+		customerService.removeCustomer(event.getCustomer());
+		getView().populateCustomers(customerService.getAllCustomers());
+	}
 }
