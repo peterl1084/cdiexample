@@ -1,10 +1,5 @@
 package org.vaadin.example.login;
 
-import javax.enterprise.inject.Instance;
-import javax.inject.Inject;
-
-import org.vaadin.example.AbstractView;
-
 import com.vaadin.cdi.CDIView;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
@@ -15,6 +10,10 @@ import com.vaadin.ui.Panel;
 import com.vaadin.ui.PasswordField;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
+import javax.enterprise.inject.Instance;
+import javax.inject.Inject;
+import org.vaadin.example.AbstractView;
+import org.vaadin.maddon.button.PrimaryButton;
 
 @CDIView
 public class LoginViewImpl extends AbstractView<LoginViewPresenter> implements
@@ -64,7 +63,7 @@ public class LoginViewImpl extends AbstractView<LoginViewPresenter> implements
 		password.setWidth(100, Unit.PERCENTAGE);
 		password.setInputPrompt("Password");
 
-		login = new Button("Login", loginClickListener);
+		login = new PrimaryButton("Login", loginClickListener);
 
 		panelContent.addComponents(username, password, login);
 		panelContent.setComponentAlignment(login, Alignment.BOTTOM_RIGHT);
