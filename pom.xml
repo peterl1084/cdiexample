@@ -14,7 +14,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.build.source>1.7</project.build.source>
         <project.build.target>1.7</project.build.target>
-        <vaadin.version>7.1.13</vaadin.version>
+        <vaadin.version>7.2-SNAPSHOT</vaadin.version>
         <vaadin.plugin.version>${vaadin.version}</vaadin.plugin.version>
         <vaadin.cdi.version>1.0.0.alpha1</vaadin.cdi.version>
     </properties>
