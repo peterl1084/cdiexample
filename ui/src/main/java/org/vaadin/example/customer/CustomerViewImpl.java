@@ -55,5 +55,9 @@ public class CustomerViewImpl extends AbstractView<CustomerViewPresenter>
 	@Override
 	public void setCustomer(Customer customer) {
 		form.setEntity(customer);
+
+		if (customer == null) {
+			customerTable.removeSelection();
+		}
 	}
 }

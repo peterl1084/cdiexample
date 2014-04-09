@@ -30,11 +30,17 @@ public class CustomerViewPresenter extends AbstractPresenter<CustomerView> {
 
 	public void onNewCustomer(
 			@Observes(notifyObserver = Reception.IF_EXISTS) CustomerAddedEvent event) {
+		getView().setCustomer(null);
 		getView().setCustomer(new Customer());
 	}
 
 	public void onCustomerSelected(
 			@Observes(notifyObserver = Reception.IF_EXISTS) CustomerSelectedEvent event) {
 		getView().setCustomer(event.getCustomer());
+	}
+
+	public void onCustomerReset(
+			@Observes(notifyObserver = Reception.IF_EXISTS) CustomerResetEvent event) {
+		getView().setCustomer(null);
 	}
 }

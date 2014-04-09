@@ -22,10 +22,21 @@ public class CustomerForm extends AbstractForm<Customer> {
 	@Inject
 	private javax.enterprise.event.Event<CustomerSavedEvent> saveEvent;
 
+	@Inject
+	private javax.enterprise.event.Event<CustomerResetEvent> resetEvent;
+
 	private AbstractForm.SavedHandler<Customer> formSaveHandler = new AbstractForm.SavedHandler<Customer>() {
 		@Override
 		public void onSave(Customer customer) {
 			saveEvent.fire(new CustomerSavedEvent(customer));
+		}
+	};
+
+	private AbstractForm.ResetHandler<Customer> formResetHandler = new AbstractForm.ResetHandler<Customer>() {
+
+		@Override
+		public void onReset(Customer entity) {
+			resetEvent.fire(new CustomerResetEvent());
 		}
 	};
 
@@ -35,6 +46,7 @@ public class CustomerForm extends AbstractForm<Customer> {
 		birthDate = new DateField("birthDate");
 
 		setSavedHandler(formSaveHandler);
+		setResetHandler(formResetHandler);
 	}
 
 	@Override

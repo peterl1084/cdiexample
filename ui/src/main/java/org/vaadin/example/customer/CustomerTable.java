@@ -73,4 +73,10 @@ public class CustomerTable extends CustomComponent {
 		customerTable.setVisibleColumns("id", "firstName", "lastName",
 				"birthDate");
 	}
+
+	public void removeSelection() {
+		customerTable.removeMValueChangeListener(tableValueChangeListener);
+		customerTable.setValue(null);
+		customerTable.addMValueChangeListener(tableValueChangeListener);
+	}
 }
