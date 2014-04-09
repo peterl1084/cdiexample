@@ -10,9 +10,6 @@ import javax.inject.Inject;
 import org.vaadin.example.AbstractView;
 import org.vaadin.example.CustomerMaddonForm;
 import org.vaadin.example.backend.entity.Customer;
-import org.vaadin.maddon.fields.MTable;
-import org.vaadin.maddon.fields.MValueChangeEvent;
-import org.vaadin.maddon.fields.MValueChangeListener;
 import org.vaadin.maddon.form.AbstractForm;
 import org.vaadin.maddon.label.Header;
 import org.vaadin.maddon.layouts.MVerticalLayout;
@@ -26,10 +23,11 @@ public class CustomerViewImpl extends AbstractView<CustomerViewPresenter>
 
 	private static final long serialVersionUID = 5444758032985372913L;
 
-	private MTable<Customer> customerTable;
-
 	@Inject
 	private CustomerMaddonForm form;
+
+	@Inject
+	private CustomerTable customerTable;
 
 	@Inject
 	private Instance<CustomerViewPresenter> presenterInstance;
@@ -42,33 +40,31 @@ public class CustomerViewImpl extends AbstractView<CustomerViewPresenter>
 		}
 	};
 
-	private MValueChangeListener<Customer> tableValueChangeListener = new MValueChangeListener<Customer>() {
-		private static final long serialVersionUID = -7829588834082127081L;
-
-		@Override
-		public void valueChange(MValueChangeEvent<Customer> event) {
-			form.setEntity(event.getValue());
-		}
-	};
-
 	@PostConstruct
 	protected void init() {
-		customerTable = new MTable<>(Customer.class);
+		MVerticalLayout layout = new MVerticalLayout();
+		layout.setSpacing(true);
 
-		customerTable.addMValueChangeListener(tableValueChangeListener);
 		form.setSavedHandler(formSaveHandler);
+		form.setVisible(false);
 
-		setCompositionRoot(new MVerticalLayout(new Header("It works!"),
-				customerTable, form));
+		layout.addComponents(new Header("Customers"), customerTable, form);
+
+		setCompositionRoot(layout);
 	}
 
 	@Override
 	public void populateCustomers(Collection<Customer> customers) {
-		customerTable.setBeans(customers);
+		customerTable.setCustomers(customers);
 	}
 
 	@Override
 	protected CustomerViewPresenter generatePresenter() {
 		return presenterInstance.get();
+	}
+
+	@Override
+	public void setCustomer(Customer customer) {
+		form.setEntity(customer);
 	}
 }

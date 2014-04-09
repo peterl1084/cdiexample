@@ -8,4 +8,6 @@ import org.vaadin.example.backend.entity.Customer;
 public interface CustomerView extends ApplicationView<CustomerViewPresenter> {
 
 	void populateCustomers(Collection<Customer> customers);
+
+	void setCustomer(Customer customer);
 }

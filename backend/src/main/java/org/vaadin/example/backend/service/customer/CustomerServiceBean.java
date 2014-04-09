@@ -1,7 +1,6 @@
 package org.vaadin.example.backend.service.customer;
 
 import java.util.Collection;
-import java.util.Date;
 import java.util.List;
 
 import javax.ejb.Stateless;
@@ -34,19 +33,6 @@ public class CustomerServiceBean implements CustomerService {
 		List<Customer> resultList = entityManager.createQuery(cq)
 				.getResultList();
 
-		if (resultList.isEmpty()) {
-			resultList.add(createTestCustomer());
-		}
-
 		return resultList;
-	}
-
-	private Customer createTestCustomer() {
-		Customer customer = new Customer();
-		customer.setFirstName("a");
-		customer.setLastName("b");
-		customer.setBirthDate(new Date());
-
-		return customer;
 	}
 }
