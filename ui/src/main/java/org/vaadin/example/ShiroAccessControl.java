@@ -8,22 +8,22 @@ import com.vaadin.cdi.access.JaasAccessControl;
 
 @Specializes
 public class ShiroAccessControl extends JaasAccessControl {
-	private static final long serialVersionUID = 8372568791751361472L;
+    private static final long serialVersionUID = 8372568791751361472L;
 
-	@Override
-	public boolean isUserSignedIn() {
-		return SecurityUtils.getSubject().isAuthenticated();
-	}
+    @Override
+    public boolean isUserSignedIn() {
+        return SecurityUtils.getSubject().isAuthenticated();
+    }
 
-	@Override
-	public boolean isUserInRole(String role) {
-		return SecurityUtils.getSubject().hasRole(role);
-	}
+    @Override
+    public boolean isUserInRole(String role) {
+        return SecurityUtils.getSubject().hasRole(role);
+    }
 
-	@Override
-	public String getPrincipalName() {
-		Object principal = SecurityUtils.getSubject().getPrincipal();
+    @Override
+    public String getPrincipalName() {
+        Object principal = SecurityUtils.getSubject().getPrincipal();
 
-		return principal != null ? principal.toString() : null;
-	}
+        return principal != null ? principal.toString() : null;
+    }
 }

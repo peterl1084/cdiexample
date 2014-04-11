@@ -16,59 +16,59 @@ import com.vaadin.ui.VerticalLayout;
 @CDIView("customers")
 @RolesAllowed({ "admin", "user" })
 public class CustomerViewImpl extends AbstractView<CustomerViewPresenter>
-		implements CustomerView {
+        implements CustomerView {
 
-	private static final long serialVersionUID = 5444758032985372913L;
+    private static final long serialVersionUID = 5444758032985372913L;
 
-	@Inject
-	private CustomerEditor customerEditor;
+    @Inject
+    private CustomerEditor customerEditor;
 
-	@Inject
-	private CustomerTable customerTable;
+    @Inject
+    private CustomerTable customerTable;
 
-	@Inject
-	private Instance<CustomerViewPresenter> presenterInstance;
+    @Inject
+    private Instance<CustomerViewPresenter> presenterInstance;
 
-	@PostConstruct
-	protected void init() {
-		VerticalLayout layout = new VerticalLayout();
-		layout.setSizeFull();
-		layout.setMargin(true);
-		layout.setSpacing(true);
+    @PostConstruct
+    protected void init() {
+        VerticalLayout layout = new VerticalLayout();
+        layout.setSizeFull();
+        layout.setMargin(true);
+        layout.setSpacing(true);
 
-		layout.addComponent(customerTable);
-		customerTable.setSizeFull();
+        layout.addComponent(customerTable);
+        customerTable.setSizeFull();
 
-		setCompositionRoot(layout);
-	}
+        setCompositionRoot(layout);
+    }
 
-	@Override
-	public void populateCustomers(Collection<Customer> customers) {
-		customerTable.setCustomers(customers);
-	}
+    @Override
+    public void populateCustomers(Collection<Customer> customers) {
+        customerTable.setCustomers(customers);
+    }
 
-	@Override
-	protected CustomerViewPresenter generatePresenter() {
-		return presenterInstance.get();
-	}
+    @Override
+    protected CustomerViewPresenter generatePresenter() {
+        return presenterInstance.get();
+    }
 
-	@Override
-	public void openEditorFor(Customer customer) {
-		customerEditor.openForCustomer(customer);
-	}
+    @Override
+    public void openEditorFor(Customer customer) {
+        customerEditor.openForCustomer(customer);
+    }
 
-	@Override
-	public void closeEditor() {
-		customerEditor.close();
-	}
+    @Override
+    public void closeEditor() {
+        customerEditor.close();
+    }
 
-	@Override
-	public String getName() {
-		return "Customers";
-	}
+    @Override
+    public String getName() {
+        return "Customers";
+    }
 
-	@Override
-	public void removeTableSelection() {
-		customerTable.removeSelection();
-	}
+    @Override
+    public void removeTableSelection() {
+        customerTable.removeSelection();
+    }
 }

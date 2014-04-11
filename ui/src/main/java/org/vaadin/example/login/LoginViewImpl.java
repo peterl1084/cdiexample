@@ -1,5 +1,13 @@
 package org.vaadin.example.login;
 
+import javax.enterprise.inject.Instance;
+import javax.inject.Inject;
+
+import org.vaadin.example.AbstractView;
+import org.vaadin.maddon.button.PrimaryButton;
+import org.vaadin.maddon.fields.MTextField;
+import org.vaadin.maddon.layouts.MVerticalLayout;
+
 import com.vaadin.cdi.CDIView;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
@@ -9,16 +17,12 @@ import com.vaadin.ui.Notification.Type;
 import com.vaadin.ui.Panel;
 import com.vaadin.ui.PasswordField;
 import com.vaadin.ui.TextField;
-import javax.enterprise.inject.Instance;
-import javax.inject.Inject;
-import org.vaadin.example.AbstractView;
-import org.vaadin.maddon.button.PrimaryButton;
-import org.vaadin.maddon.fields.MTextField;
-import org.vaadin.maddon.layouts.MVerticalLayout;
 
 @CDIView
 public class LoginViewImpl extends AbstractView<LoginViewPresenter> implements
         LoginView {
+
+    private static final long serialVersionUID = -4954635993174003879L;
 
     @Inject
     private Instance<LoginViewPresenter> presenterInstance;
@@ -50,16 +54,11 @@ public class LoginViewImpl extends AbstractView<LoginViewPresenter> implements
         Panel loginPanel = new Panel("Login to application");
         loginPanel.setSizeUndefined();
 
-        loginPanel.setContent(
-                new MVerticalLayout(
-                        username,
-                        password,
-                        login
-                ).withAlign(login, Alignment.BOTTOM_RIGHT)
-        );
+        loginPanel.setContent(new MVerticalLayout(username, password, login)
+                .withAlign(login, Alignment.BOTTOM_RIGHT));
 
-        setCompositionRoot(new MVerticalLayout(loginPanel)
-                .withAlign(loginPanel, Alignment.MIDDLE_CENTER).withFullHeight());
+        setCompositionRoot(new MVerticalLayout(loginPanel).withAlign(
+                loginPanel, Alignment.MIDDLE_CENTER).withFullHeight());
     }
 
     @Override

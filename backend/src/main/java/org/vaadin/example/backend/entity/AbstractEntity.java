@@ -16,48 +16,48 @@ import javax.persistence.Version;
 @MappedSuperclass
 public abstract class AbstractEntity {
 
-	@Column(name = "UUID", nullable = false, unique = true)
-	private String uuid;
+    @Column(name = "UUID", nullable = false, unique = true)
+    private String uuid;
 
-	@Version
-	@Column(name = "Revision")
-	private long revision;
+    @Version
+    @Column(name = "Revision")
+    private long revision;
 
-	public AbstractEntity() {
-		uuid = UUID.randomUUID().toString();
-	}
+    public AbstractEntity() {
+        uuid = UUID.randomUUID().toString();
+    }
 
-	public String getUuid() {
-		return uuid;
-	}
+    public String getUuid() {
+        return uuid;
+    }
 
-	/**
-	 * @return entity's database primary key if persisted
-	 */
-	public abstract Long getId();
+    /**
+     * @return entity's database primary key if persisted
+     */
+    public abstract Long getId();
 
-	/**
-	 * @return true if this entity is persisted to database, false otherwise.
-	 */
-	public boolean isPersisted() {
-		return getId() != null;
-	}
+    /**
+     * @return true if this entity is persisted to database, false otherwise.
+     */
+    public boolean isPersisted() {
+        return getId() != null;
+    }
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
 
-		if (obj instanceof AbstractEntity) {
-			return this.uuid.equals(((AbstractEntity) obj).uuid);
-		}
+        if (obj instanceof AbstractEntity) {
+            return this.uuid.equals(((AbstractEntity) obj).uuid);
+        }
 
-		return false;
-	}
+        return false;
+    }
 
-	@Override
-	public int hashCode() {
-		return uuid.hashCode();
-	}
+    @Override
+    public int hashCode() {
+        return uuid.hashCode();
+    }
 }

@@ -27,91 +27,90 @@ import com.vaadin.ui.themes.ChameleonTheme;
 @CDIUI
 @Theme("dawn")
 public class VaadinUI extends UI {
+    private static final long serialVersionUID = 3618386613849364696L;
 
-	private static final long serialVersionUID = 3618386613849364696L;
+    private Navigator navigator;
 
-	private Navigator navigator;
+    @Inject
+    private CDIViewProvider viewProvider;
 
-	@Inject
-	private CDIViewProvider viewProvider;
+    private HorizontalLayout topBar;
 
-	private HorizontalLayout topBar;
+    private Button logout;
 
-	private Button logout;
+    private Header header;
 
-	private Header header;
+    @Inject
+    private ApplicationViewArea viewArea;
 
-	@Inject
-	private ApplicationViewArea viewArea;
+    private final Button.ClickListener logoutClickListener = new Button.ClickListener() {
+        private static final long serialVersionUID = -1545988729141348821L;
 
-	private final Button.ClickListener logoutClickListener = new Button.ClickListener() {
-		private static final long serialVersionUID = -1545988729141348821L;
+        @Override
+        public void buttonClick(ClickEvent event) {
+            SecurityUtils.getSubject().logout();
+            VaadinSession.getCurrent().close();
+            Page.getCurrent().setLocation("");
+        }
+    };
 
-		@Override
-		public void buttonClick(ClickEvent event) {
-			SecurityUtils.getSubject().logout();
-			VaadinSession.getCurrent().close();
-			Page.getCurrent().setLocation("");
-		}
-	};
+    @Override
+    protected void init(VaadinRequest request) {
+        VerticalLayout layout = new VerticalLayout();
+        layout.setSizeFull();
+        layout.setMargin(true);
 
-	@Override
-	protected void init(VaadinRequest request) {
-		VerticalLayout layout = new VerticalLayout();
-		layout.setSizeFull();
-		layout.setMargin(true);
+        topBar = new HorizontalLayout();
+        topBar.setWidth(100, Unit.PERCENTAGE);
+        topBar.setSpacing(true);
 
-		topBar = new HorizontalLayout();
-		topBar.setWidth(100, Unit.PERCENTAGE);
-		topBar.setSpacing(true);
+        header = new Header("Welcome, please login");
+        header.setWidth(100, Unit.PERCENTAGE);
 
-		header = new Header("Welcome, please login");
-		header.setWidth(100, Unit.PERCENTAGE);
+        logout = new Button("Logout", logoutClickListener);
+        logout.setStyleName(ChameleonTheme.BUTTON_LINK);
 
-		logout = new Button("Logout", logoutClickListener);
-		logout.setStyleName(ChameleonTheme.BUTTON_LINK);
+        topBar.addComponents(header, logout);
+        topBar.setExpandRatio(header, 1);
 
-		topBar.addComponents(header, logout);
-		topBar.setExpandRatio(header, 1);
+        layout.addComponents(topBar, viewArea.getViewContainer());
+        layout.setExpandRatio(viewArea.getViewContainer(), 1);
 
-		layout.addComponents(topBar, viewArea.getViewContainer());
-		layout.setExpandRatio(viewArea.getViewContainer(), 1);
+        setContent(layout);
 
-		setContent(layout);
+        navigator = new Navigator(this, viewArea);
+        navigator.addProvider(viewProvider);
 
-		navigator = new Navigator(this, viewArea);
-		navigator.addProvider(viewProvider);
+        if (!isLoggedIn()) {
+            navigator.navigateTo("");
+            logout.setVisible(false);
+        } else {
+            if (navigator.getState().isEmpty()) {
+                navigator.navigateTo("customers");
+                logout.setVisible(true);
+            }
+        }
+    }
 
-		if (!isLoggedIn()) {
-			navigator.navigateTo("");
-			logout.setVisible(false);
-		} else {
-			if (navigator.getState().isEmpty()) {
-				navigator.navigateTo("customers");
-				logout.setVisible(true);
-			}
-		}
-	}
+    private boolean isLoggedIn() {
+        Subject subject = SecurityUtils.getSubject();
+        if (subject == null) {
+            System.err.println("Could not find subject");
+            return false;
+        }
 
-	private boolean isLoggedIn() {
-		Subject subject = SecurityUtils.getSubject();
-		if (subject == null) {
-			System.err.println("Could not find subject");
-			return false;
-		}
+        return subject.isAuthenticated();
+    }
 
-		return subject.isAuthenticated();
-	}
+    public void userLoggedIn(
+            @Observes(notifyObserver = Reception.IF_EXISTS) UserLoggedInEvent event) {
+        Notification.show("Welcome back " + event.getUsername());
+        navigator.navigateTo("customers");
+        logout.setVisible(true);
+    }
 
-	public void userLoggedIn(
-			@Observes(notifyObserver = Reception.IF_EXISTS) UserLoggedInEvent event) {
-		Notification.show("Welcome back " + event.getUsername());
-		navigator.navigateTo("customers");
-		logout.setVisible(true);
-	}
-
-	public void onViewNavigated(
-			@Observes(notifyObserver = Reception.IF_EXISTS) ViewNavigationEvent event) {
-		header.setText(event.getViewName());
-	}
+    public void onViewNavigated(
+            @Observes(notifyObserver = Reception.IF_EXISTS) ViewNavigationEvent event) {
+        header.setText(event.getViewName());
+    }
 }

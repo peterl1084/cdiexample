@@ -56,9 +56,7 @@ public class CustomerForm extends AbstractForm<Customer> {
             component.setWidth(100, Unit.PERCENTAGE);
         }
 
-        return new MVerticalLayout(formLayout)
-                .add(getToolbar(), Alignment.BOTTOM_RIGHT)
-                .expand(formLayout);
+        return new MVerticalLayout(formLayout).add(getToolbar(),
+                Alignment.BOTTOM_RIGHT).expand(formLayout);
     }
-
 }

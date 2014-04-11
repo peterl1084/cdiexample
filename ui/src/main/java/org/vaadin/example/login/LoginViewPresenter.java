@@ -14,28 +14,28 @@ import com.vaadin.cdi.UIScoped;
 @UIScoped
 public class LoginViewPresenter extends AbstractPresenter<LoginView> {
 
-	@Inject
-	private Event<UserLoggedInEvent> loggedInEvent;
+    @Inject
+    private Event<UserLoggedInEvent> loggedInEvent;
 
-	@Override
-	protected void onViewEnter() {
+    @Override
+    protected void onViewEnter() {
 
-	}
+    }
 
-	public void onLoginPressed(String username, String password) {
-		UsernamePasswordToken token = new UsernamePasswordToken(username,
-				password);
+    public void onLoginPressed(String username, String password) {
+        UsernamePasswordToken token = new UsernamePasswordToken(username,
+                password);
 
-		try {
-			Subject subject = SecurityUtils.getSubject();
-			subject.login(token);
+        try {
+            Subject subject = SecurityUtils.getSubject();
+            subject.login(token);
 
-			if (subject.isAuthenticated()) {
-				loggedInEvent.fire(new UserLoggedInEvent(subject.getPrincipal()
-						.toString()));
-			}
-		} catch (AuthenticationException e) {
-			getView().showInvalidLoginNotification();
-		}
-	}
+            if (subject.isAuthenticated()) {
+                loggedInEvent.fire(new UserLoggedInEvent(subject.getPrincipal()
+                        .toString()));
+            }
+        } catch (AuthenticationException e) {
+            getView().showInvalidLoginNotification();
+        }
+    }
 }

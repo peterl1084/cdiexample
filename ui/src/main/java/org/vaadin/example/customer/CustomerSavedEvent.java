@@ -4,13 +4,13 @@ import org.vaadin.example.backend.entity.Customer;
 
 public class CustomerSavedEvent {
 
-	private final Customer customer;
+    private final Customer customer;
 
-	public CustomerSavedEvent(Customer customer) {
-		this.customer = customer;
-	}
+    public CustomerSavedEvent(Customer customer) {
+        this.customer = customer;
+    }
 
-	public Customer getCustomer() {
-		return customer;
-	}
+    public Customer getCustomer() {
+        return customer;
+    }
 }
