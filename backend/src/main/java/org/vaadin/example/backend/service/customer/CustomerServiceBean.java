@@ -4,8 +4,6 @@ import java.util.Collection;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
-import javax.annotation.security.PermitAll;
-import javax.annotation.security.RolesAllowed;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
@@ -16,7 +14,6 @@ import javax.persistence.criteria.CriteriaQuery;
 import org.vaadin.example.backend.entity.Customer;
 
 @Stateless
-@PermitAll
 public class CustomerServiceBean implements CustomerService {
 
     @PersistenceContext(unitName = "example")
@@ -28,7 +25,6 @@ public class CustomerServiceBean implements CustomerService {
     }
 
     @Override
-    @RolesAllowed("admin")
     public void storeCustomer(Customer customer) {
         if (customer.isPersisted()) {
             entityManager.merge(customer);
@@ -49,7 +45,6 @@ public class CustomerServiceBean implements CustomerService {
     }
 
     @Override
-    @RolesAllowed("admin")
     public void removeCustomer(Customer customer) {
         customer = entityManager.getReference(Customer.class, customer.getId());
         entityManager.remove(customer);
