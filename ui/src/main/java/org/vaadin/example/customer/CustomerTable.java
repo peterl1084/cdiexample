@@ -4,6 +4,7 @@ import java.util.Collection;
 
 import javax.inject.Inject;
 
+import org.apache.shiro.SecurityUtils;
 import org.vaadin.example.backend.entity.Customer;
 import org.vaadin.maddon.button.ConfirmButton;
 import org.vaadin.maddon.button.MButton;
@@ -124,6 +125,8 @@ public class CustomerTable extends CustomComponent {
 
         layout.addComponents(buttonLayout, customerTable);
         layout.expand(customerTable);
+
+        buttonLayout.setVisible(SecurityUtils.getSubject().hasRole("admin"));
 
         layout.setComponentAlignment(buttonLayout, Alignment.TOP_RIGHT);
 

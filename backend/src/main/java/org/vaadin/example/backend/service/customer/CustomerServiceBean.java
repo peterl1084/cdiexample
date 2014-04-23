@@ -3,20 +3,32 @@ package org.vaadin.example.backend.service.customer;
 import java.util.Collection;
 import java.util.List;
 
+import javax.annotation.PostConstruct;
+import javax.annotation.security.PermitAll;
+import javax.annotation.security.RolesAllowed;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaQuery;
 
 import org.vaadin.example.backend.entity.Customer;
 
 @Stateless
+@PermitAll
 public class CustomerServiceBean implements CustomerService {
 
     @PersistenceContext(unitName = "example")
     private EntityManager entityManager;
 
+    @PostConstruct
+    protected void init() {
+        createAdminUserIfDoesntExist();
+    }
+
     @Override
+    @RolesAllowed("admin")
     public void storeCustomer(Customer customer) {
         if (customer.isPersisted()) {
             entityManager.merge(customer);
@@ -37,8 +49,34 @@ public class CustomerServiceBean implements CustomerService {
     }
 
     @Override
+    @RolesAllowed("admin")
     public void removeCustomer(Customer customer) {
         customer = entityManager.getReference(Customer.class, customer.getId());
         entityManager.remove(customer);
+    }
+
+    @Override
+    public Customer getUserByUsername(String username) {
+        TypedQuery<Customer> query = entityManager.createQuery(
+                "SELECT c FROM Customer c WHERE username = :username",
+                Customer.class);
+        query.setParameter("username", username);
+        try {
+            return query.getSingleResult();
+        } catch (NoResultException e) {
+            return null;
+        }
+    }
+
+    private void createAdminUserIfDoesntExist() {
+        Customer admin = getUserByUsername("admin");
+
+        if (admin == null) {
+            admin = new Customer();
+            admin.addRole("admin");
+            admin.setUsername("admin");
+            admin.setHumanReadablePassword("password");
+            storeCustomer(admin);
+        }
     }
 }

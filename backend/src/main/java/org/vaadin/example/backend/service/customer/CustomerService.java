@@ -27,4 +27,12 @@ public interface CustomerService {
      * @param customer
      */
     void removeCustomer(Customer customer);
+
+    /**
+     * Retrieves user from the service with given username
+     * 
+     * @param username
+     * @return user object instance or null if no such user was found.
+     */
+    Customer getUserByUsername(String username);
 }

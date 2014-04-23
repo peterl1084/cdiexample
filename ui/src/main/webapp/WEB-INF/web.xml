@@ -17,7 +17,7 @@
 	</servlet-mapping>
 
 	<listener>
-		<listener-class>org.apache.shiro.web.env.EnvironmentLoaderListener</listener-class>
+		<listener-class>org.vaadin.example.backend.authentication.CDIAwareShiroEnvironmentLoader</listener-class>
 	</listener>
 
 	<filter>

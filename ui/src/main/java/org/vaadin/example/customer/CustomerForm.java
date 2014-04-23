@@ -7,19 +7,37 @@ import org.vaadin.maddon.fields.MTextField;
 import org.vaadin.maddon.form.AbstractForm;
 import org.vaadin.maddon.layouts.MVerticalLayout;
 
+import com.vaadin.data.fieldgroup.PropertyId;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.DateField;
 import com.vaadin.ui.FormLayout;
+import com.vaadin.ui.Layout;
+import com.vaadin.ui.OptionGroup;
 import com.vaadin.ui.TextField;
+import com.vaadin.ui.VerticalLayout;
 
 public class CustomerForm extends AbstractForm<Customer> {
 
     private static final long serialVersionUID = -1684898560662964709L;
 
+    @PropertyId("username")
+    private TextField userName = new MTextField("userName");
+
+    @PropertyId("password")
+    private TextField password = new MTextField("password");
+
+    @PropertyId("firstName")
     private TextField firstName = new MTextField("firstName");
+
+    @PropertyId("lastName")
     private TextField lastName = new MTextField("lastName");
+
+    @PropertyId("birthDate")
     private DateField birthDate = new DateField("birthDate");
+
+    @PropertyId("roles")
+    private OptionGroup roles = new OptionGroup("role");
 
     @Inject
     private javax.enterprise.event.Event<CustomerSavedEvent> saveEvent;
@@ -45,18 +63,46 @@ public class CustomerForm extends AbstractForm<Customer> {
     public CustomerForm() {
         setSavedHandler(formSaveHandler);
         setResetHandler(formResetHandler);
+
+        roles.addItem("admin");
+        roles.addItem("user");
+
+        roles.setItemCaption("admin", "Admin");
+        roles.setItemCaption("user", "User");
+
+        roles.setValue("user");
     }
 
     @Override
     protected Component createContent() {
-        FormLayout formLayout = new FormLayout(firstName, lastName, birthDate);
+        userName.setRequired(true);
+        password.setRequired(true);
+
+        FormLayout formLayout = new FormLayout(userName, password, firstName,
+                lastName, birthDate, roles);
         formLayout.setSizeFull();
         formLayout.setMargin(false);
+
         for (Component component : formLayout) {
             component.setWidth(100, Unit.PERCENTAGE);
         }
 
-        return new MVerticalLayout(formLayout).add(getToolbar(),
+        Layout toolbar = getToolbar();
+        VerticalLayout layout = new MVerticalLayout(formLayout).add(toolbar,
                 Alignment.BOTTOM_RIGHT).expand(formLayout);
+
+        // if (SecurityUtils.getSubject().hasRole("admin")) {
+        // toolbar.setVisible(true);
+        // for (Component component : formLayout) {
+        // component.setReadOnly(false);
+        // }
+        // } else {
+        // toolbar.setVisible(false);
+        // for (Component component : formLayout) {
+        // component.setReadOnly(true);
+        // }
+        // }
+
+        return layout;
     }
 }

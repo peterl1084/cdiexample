@@ -12,6 +12,7 @@ public class ShiroAccessControl extends JaasAccessControl {
 
     @Override
     public boolean isUserSignedIn() {
+
         return SecurityUtils.getSubject().isAuthenticated();
     }
 
