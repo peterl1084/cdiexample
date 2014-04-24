@@ -20,6 +20,7 @@
     </properties>
 
     <modules>
+        <module>dawn</module>
         <module>backend</module>
         <module>ui</module>
     </modules>
