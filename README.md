@@ -24,7 +24,7 @@ TODO:
 
 Build should be IDE/platform indendent. So just
 
- * Checkout the the project with `git clone --recursive git@github.com:peterl1084/cdiexample.git`. `--recursive` needed for cloning `git submodule` for [the theme](https://github.com/mstahv/dawn).
+ * Checkout the the project with `git clone --recursive https://github.com/peterl1084/cdiexample.git`. The parameter `--recursive` is needed for cloning `git submodule` for [the theme](https://github.com/mstahv/dawn).
  * Configure your development server (e.g. GlassFish or WildFly) to contain data source "jdbc/example-backend"
  * Build + Run/Debug
 
