@@ -45,7 +45,7 @@ public class JPARealm extends AuthorizingRealm {
 
         // null usernames are invalid
         if (token == null) {
-            throw new AuthorizationException(
+            throw new AuthenticationException(
                     "PrincipalCollection method argument cannot be null.");
         }
 
