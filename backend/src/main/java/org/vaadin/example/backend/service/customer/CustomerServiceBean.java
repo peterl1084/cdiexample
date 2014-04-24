@@ -2,15 +2,12 @@ package org.vaadin.example.backend.service.customer;
 
 import java.util.Collection;
 import java.util.List;
-
-import javax.annotation.PostConstruct;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaQuery;
-
 import org.vaadin.example.backend.entity.Customer;
 
 @Stateless
@@ -18,11 +15,6 @@ public class CustomerServiceBean implements CustomerService {
 
     @PersistenceContext(unitName = "example")
     private EntityManager entityManager;
-
-    @PostConstruct
-    protected void init() {
-        createAdminUserIfDoesntExist();
-    }
 
     @Override
     public void storeCustomer(Customer customer) {
@@ -53,7 +45,7 @@ public class CustomerServiceBean implements CustomerService {
     @Override
     public Customer getUserByUsername(String username) {
         TypedQuery<Customer> query = entityManager.createQuery(
-                "SELECT c FROM Customer c WHERE username = :username",
+                "SELECT c FROM Customer c WHERE c.username = :username",
                 Customer.class);
         query.setParameter("username", username);
         try {
@@ -63,15 +55,4 @@ public class CustomerServiceBean implements CustomerService {
         }
     }
 
-    private void createAdminUserIfDoesntExist() {
-        Customer admin = getUserByUsername("admin");
-
-        if (admin == null) {
-            admin = new Customer();
-            admin.addRole("admin");
-            admin.setUsername("admin");
-            admin.setHumanReadablePassword("password");
-            storeCustomer(admin);
-        }
-    }
 }
