@@ -14,4 +14,6 @@ public interface CustomerView extends ApplicationView<CustomerViewPresenter> {
     void openEditorFor(Customer customer);
 
     void closeEditor();
+
+    void showPasswordDontMatchNotification();
 }

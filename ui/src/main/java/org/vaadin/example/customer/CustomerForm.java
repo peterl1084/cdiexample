@@ -15,6 +15,7 @@ import com.vaadin.ui.DateField;
 import com.vaadin.ui.FormLayout;
 import com.vaadin.ui.Layout;
 import com.vaadin.ui.OptionGroup;
+import com.vaadin.ui.PasswordField;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
 
@@ -22,23 +23,26 @@ public class CustomerForm extends AbstractForm<Customer> {
 
     private static final long serialVersionUID = -1684898560662964709L;
 
-    @PropertyId("username")
-    private TextField userName = new MTextField("userName");
+    private FormLayout formLayout;
 
-    @PropertyId("password")
-    private TextField password = new MTextField("password");
+    @PropertyId("username")
+    private TextField userName = new MTextField("Username");
 
     @PropertyId("firstName")
-    private TextField firstName = new MTextField("firstName");
+    private TextField firstName = new MTextField("First name");
 
     @PropertyId("lastName")
-    private TextField lastName = new MTextField("lastName");
+    private TextField lastName = new MTextField("Last name");
 
     @PropertyId("birthDate")
-    private DateField birthDate = new DateField("birthDate");
+    private DateField birthDate = new DateField("Birth Date");
 
     @PropertyId("roles")
-    private OptionGroup roles = new OptionGroup("role");
+    private OptionGroup roles = new OptionGroup("Roles");
+
+    private PasswordField passwordField = new PasswordField("Password");
+    private PasswordField passwordConfirmationField = new PasswordField(
+            "Password confirmation");
 
     @Inject
     private javax.enterprise.event.Event<CustomerSavedEvent> saveEvent;
@@ -49,7 +53,13 @@ public class CustomerForm extends AbstractForm<Customer> {
     private AbstractForm.SavedHandler<Customer> formSaveHandler = new AbstractForm.SavedHandler<Customer>() {
         @Override
         public void onSave(Customer customer) {
-            saveEvent.fire(new CustomerSavedEvent(customer));
+            CustomerSavedEvent customerSavedEvent = new CustomerSavedEvent(
+                    customer);
+            customerSavedEvent.setPassword(passwordField.getValue());
+            customerSavedEvent
+                    .setPasswordConfirmation(passwordConfirmationField
+                            .getValue());
+            saveEvent.fire(customerSavedEvent);
         }
     };
 
@@ -72,15 +82,15 @@ public class CustomerForm extends AbstractForm<Customer> {
 
         roles.setItemCaption("admin", "Admin");
         roles.setItemCaption("user", "User");
+
+        formLayout = new FormLayout(userName, firstName, lastName, birthDate,
+                roles);
     }
 
     @Override
     protected Component createContent() {
         userName.setRequired(true);
-        password.setRequired(true);
 
-        FormLayout formLayout = new FormLayout(userName, password, firstName,
-                lastName, birthDate, roles);
         formLayout.setSizeFull();
         formLayout.setMargin(false);
 
@@ -109,6 +119,20 @@ public class CustomerForm extends AbstractForm<Customer> {
             for (Component component : formLayout) {
                 component.setReadOnly(true);
             }
+        }
+    }
+
+    @Override
+    public void setEntity(Customer entity) {
+        super.setEntity(entity);
+
+        if (entity.isPersisted()) {
+            formLayout.addComponent(passwordField, 5);
+            formLayout.addComponent(passwordConfirmationField, 6);
+            userName.setReadOnly(true);
+        } else {
+            formLayout.addComponent(passwordField, 1);
+            formLayout.addComponent(passwordConfirmationField, 2);
         }
     }
 }

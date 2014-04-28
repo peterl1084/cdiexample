@@ -11,6 +11,8 @@ import org.vaadin.example.AbstractView;
 import org.vaadin.example.backend.entity.Customer;
 
 import com.vaadin.cdi.CDIView;
+import com.vaadin.ui.Notification;
+import com.vaadin.ui.Notification.Type;
 import com.vaadin.ui.VerticalLayout;
 
 @CDIView("customers")
@@ -70,5 +72,11 @@ public class CustomerViewImpl extends AbstractView<CustomerViewPresenter>
     @Override
     public void removeTableSelection() {
         customerTable.removeSelection();
+    }
+
+    @Override
+    public void showPasswordDontMatchNotification() {
+        Notification.show("Password not given or password don't match",
+                Type.TRAY_NOTIFICATION);
     }
 }

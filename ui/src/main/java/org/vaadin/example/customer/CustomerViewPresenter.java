@@ -23,6 +23,35 @@ public class CustomerViewPresenter extends AbstractPresenter<CustomerView> {
 
     public void onCustomerSaved(
             @Observes(notifyObserver = Reception.IF_EXISTS) CustomerSavedEvent event) {
+
+        if (event.getCustomer().isPersisted()) {
+            if (event.isNewPasswordGiven()) {
+                // Check that new password matches the confirmation
+                if (event.isPasswordMatchingConfirmation()) {
+                    event.getCustomer().setHumanReadablePassword(
+                            event.getPassword());
+                    storeCustomerAndRefreshView(event);
+                } else {
+                    getView().showPasswordDontMatchNotification();
+                }
+            } else {
+                // Save without changing password
+                storeCustomerAndRefreshView(event);
+            }
+        } else {
+            // New customer must always have password
+            if (event.isNewPasswordGiven()
+                    && event.isPasswordMatchingConfirmation()) {
+                event.getCustomer().setHumanReadablePassword(
+                        event.getPassword());
+                storeCustomerAndRefreshView(event);
+            } else {
+                getView().showPasswordDontMatchNotification();
+            }
+        }
+    }
+
+    private void storeCustomerAndRefreshView(CustomerSavedEvent event) {
         customerService.storeCustomer(event.getCustomer());
         getView().populateCustomers(customerService.getAllCustomers());
         getView().removeTableSelection();
