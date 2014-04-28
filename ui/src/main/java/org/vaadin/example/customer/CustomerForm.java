@@ -70,8 +70,6 @@ public class CustomerForm extends AbstractForm<Customer> {
 
         roles.setItemCaption("admin", "Admin");
         roles.setItemCaption("user", "User");
-
-        roles.setValue("user");
     }
 
     @Override
