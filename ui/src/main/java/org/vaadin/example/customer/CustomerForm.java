@@ -20,7 +20,6 @@ import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
 
 public class CustomerForm extends AbstractForm<Customer> {
-
     private static final long serialVersionUID = -1684898560662964709L;
 
     private FormLayout formLayout;
@@ -53,12 +52,7 @@ public class CustomerForm extends AbstractForm<Customer> {
     private AbstractForm.SavedHandler<Customer> formSaveHandler = new AbstractForm.SavedHandler<Customer>() {
         @Override
         public void onSave(Customer customer) {
-            CustomerSavedEvent customerSavedEvent = new CustomerSavedEvent(
-                    customer);
-            customerSavedEvent.setPassword(passwordField.getValue());
-            customerSavedEvent
-                    .setPasswordConfirmation(passwordConfirmationField
-                            .getValue());
+            CustomerSavedEvent customerSavedEvent = buildCustomerSaveEvent(customer);
             saveEvent.fire(customerSavedEvent);
         }
     };
@@ -88,6 +82,22 @@ public class CustomerForm extends AbstractForm<Customer> {
     }
 
     @Override
+    public void setEntity(Customer entity) {
+        super.setEntity(entity);
+
+        if (entity.isPersisted()) {
+            formLayout.addComponent(passwordField);
+            formLayout.addComponent(passwordConfirmationField);
+            userName.setReadOnly(true);
+
+            passwordField.setCaption("New password");
+        } else {
+            formLayout.addComponent(passwordField, 1);
+            formLayout.addComponent(passwordConfirmationField, 2);
+        }
+    }
+
+    @Override
     protected Component createContent() {
         userName.setRequired(true);
 
@@ -107,6 +117,14 @@ public class CustomerForm extends AbstractForm<Customer> {
         return layout;
     }
 
+    private CustomerSavedEvent buildCustomerSaveEvent(Customer customer) {
+        CustomerSavedEvent customerSavedEvent = new CustomerSavedEvent(customer);
+        customerSavedEvent.setPassword(passwordField.getValue());
+        customerSavedEvent.setPasswordConfirmation(passwordConfirmationField
+                .getValue());
+        return customerSavedEvent;
+    }
+
     private void hideToolbarFromNonAdminUsers(FormLayout formLayout,
             Layout toolbar) {
         if (SecurityUtils.getSubject().hasRole("admin")) {
@@ -119,22 +137,6 @@ public class CustomerForm extends AbstractForm<Customer> {
             for (Component component : formLayout) {
                 component.setReadOnly(true);
             }
-        }
-    }
-
-    @Override
-    public void setEntity(Customer entity) {
-        super.setEntity(entity);
-
-        if (entity.isPersisted()) {
-            formLayout.addComponent(passwordField);
-            formLayout.addComponent(passwordConfirmationField);
-            userName.setReadOnly(true);
-
-            passwordField.setCaption("New password");
-        } else {
-            formLayout.addComponent(passwordField, 1);
-            formLayout.addComponent(passwordConfirmationField, 2);
         }
     }
 }
