@@ -127,9 +127,11 @@ public class CustomerForm extends AbstractForm<Customer> {
         super.setEntity(entity);
 
         if (entity.isPersisted()) {
-            formLayout.addComponent(passwordField, 5);
-            formLayout.addComponent(passwordConfirmationField, 6);
+            formLayout.addComponent(passwordField);
+            formLayout.addComponent(passwordConfirmationField);
             userName.setReadOnly(true);
+
+            passwordField.setCaption("New password");
         } else {
             formLayout.addComponent(passwordField, 1);
             formLayout.addComponent(passwordConfirmationField, 2);
