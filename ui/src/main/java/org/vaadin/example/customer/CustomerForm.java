@@ -2,6 +2,7 @@ package org.vaadin.example.customer;
 
 import javax.inject.Inject;
 
+import org.apache.shiro.SecurityUtils;
 import org.vaadin.example.backend.entity.Customer;
 import org.vaadin.maddon.fields.MTextField;
 import org.vaadin.maddon.form.AbstractForm;
@@ -91,18 +92,23 @@ public class CustomerForm extends AbstractForm<Customer> {
         VerticalLayout layout = new MVerticalLayout(formLayout).add(toolbar,
                 Alignment.BOTTOM_RIGHT).expand(formLayout);
 
-        // if (SecurityUtils.getSubject().hasRole("admin")) {
-        // toolbar.setVisible(true);
-        // for (Component component : formLayout) {
-        // component.setReadOnly(false);
-        // }
-        // } else {
-        // toolbar.setVisible(false);
-        // for (Component component : formLayout) {
-        // component.setReadOnly(true);
-        // }
-        // }
+        hideToolbarFromNonAdminUsers(formLayout, toolbar);
 
         return layout;
+    }
+
+    private void hideToolbarFromNonAdminUsers(FormLayout formLayout,
+            Layout toolbar) {
+        if (SecurityUtils.getSubject().hasRole("admin")) {
+            toolbar.setVisible(true);
+            for (Component component : formLayout) {
+                component.setReadOnly(false);
+            }
+        } else {
+            toolbar.setVisible(false);
+            for (Component component : formLayout) {
+                component.setReadOnly(true);
+            }
+        }
     }
 }
