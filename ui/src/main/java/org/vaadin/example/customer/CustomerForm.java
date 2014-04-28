@@ -67,6 +67,8 @@ public class CustomerForm extends AbstractForm<Customer> {
 
         roles.addItem("admin");
         roles.addItem("user");
+        roles.setMultiSelect(true);
+        roles.setConverter(new CollectionToCommaSeparatedStringConverter());
 
         roles.setItemCaption("admin", "Admin");
         roles.setItemCaption("user", "User");
