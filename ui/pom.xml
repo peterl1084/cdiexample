@@ -1,65 +1,75 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <modelVersion>4.0.0</modelVersion>
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
 
-    <parent>
-        <groupId>org.vaadin</groupId>
-        <artifactId>cdiexample</artifactId>
-        <version>0.0.1-SNAPSHOT</version>
-    </parent>
+	<parent>
+		<groupId>org.vaadin</groupId>
+		<artifactId>cdiexample</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+	</parent>
 
-    <artifactId>ui</artifactId>
-    <packaging>war</packaging>
-    <name>Vaadin UI module</name>
+	<artifactId>ui</artifactId>
+	<packaging>war</packaging>
+	<name>Vaadin UI module</name>
 
-    <dependencies>
-        <dependency>
-            <groupId>javax</groupId>
-            <artifactId>javaee-web-api</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.vaadin</groupId>
-            <artifactId>vaadin-server</artifactId>
-        </dependency>
-        <dependency>
-            <artifactId>dawn</artifactId>
-            <groupId>org.peimari</groupId>
-        </dependency>
-        <dependency>
-            <groupId>com.vaadin</groupId>
-            <artifactId>vaadin-client-compiled</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.vaadin</groupId>
-            <artifactId>vaadin-cdi</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.vaadin</groupId>
-            <artifactId>backend</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.peimari</groupId>
-            <artifactId>maddon</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.shiro</groupId>
-            <artifactId>shiro-core</artifactId>
-            <version>1.2.3</version>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.shiro</groupId>
-            <artifactId>shiro-web</artifactId>
-            <version>1.2.3</version>
-        </dependency>
-        
-        <dependency>
-        	<groupId>com.vaadin</groupId>
-        	<artifactId>vaadin-testbench</artifactId>
-        	<version>4.0.0.alpha1</version>
-        	<scope>test</scope>
-        </dependency>
-
-    </dependencies>
+	<dependencies>
+		<dependency>
+			<groupId>javax</groupId>
+			<artifactId>javaee-web-api</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.vaadin</groupId>
+			<artifactId>vaadin-server</artifactId>
+		</dependency>
+		<dependency>
+			<artifactId>dawn</artifactId>
+			<groupId>org.peimari</groupId>
+		</dependency>
+		<dependency>
+			<groupId>com.vaadin</groupId>
+			<artifactId>vaadin-client-compiled</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.vaadin</groupId>
+			<artifactId>vaadin-cdi</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.vaadin</groupId>
+			<artifactId>backend</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.peimari</groupId>
+			<artifactId>maddon</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.shiro</groupId>
+			<artifactId>shiro-core</artifactId>
+			<version>1.2.3</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.shiro</groupId>
+			<artifactId>shiro-web</artifactId>
+			<version>1.2.3</version>
+		</dependency>
+		<dependency>
+			<groupId>com.vaadin</groupId>
+			<artifactId>vaadin-testbench</artifactId>
+			<version>4.0.0.alpha1</version>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.openejb.maven</groupId>
+				<artifactId>tomee-maven-plugin</artifactId>
+				<version>1.6.0.2</version>
+				<configuration>
+					<context>ROOT</context>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
 
 </project>
