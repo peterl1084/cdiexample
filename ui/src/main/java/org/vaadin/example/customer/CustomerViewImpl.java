@@ -13,7 +13,6 @@ import org.vaadin.example.backend.entity.Customer;
 import com.vaadin.cdi.CDIView;
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.Notification.Type;
-import com.vaadin.ui.VerticalLayout;
 
 @CDIView("customers")
 @RolesAllowed({ "admin", "user" })
@@ -33,15 +32,7 @@ public class CustomerViewImpl extends AbstractView<CustomerViewPresenter>
 
     @PostConstruct
     protected void init() {
-        VerticalLayout layout = new VerticalLayout();
-        layout.setSizeFull();
-        layout.setMargin(true);
-        layout.setSpacing(true);
-
-        layout.addComponent(customerTable);
-        customerTable.setSizeFull();
-
-        setCompositionRoot(layout);
+        setCompositionRoot(customerTable);
     }
 
     @Override

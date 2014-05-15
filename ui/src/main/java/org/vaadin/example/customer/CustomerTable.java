@@ -11,6 +11,7 @@ import org.vaadin.maddon.button.MButton;
 import org.vaadin.maddon.fields.MTable;
 import org.vaadin.maddon.fields.MValueChangeEvent;
 import org.vaadin.maddon.fields.MValueChangeListener;
+import org.vaadin.maddon.layouts.MHorizontalLayout;
 import org.vaadin.maddon.layouts.MVerticalLayout;
 
 import com.vaadin.event.ItemClickEvent;
@@ -118,10 +119,7 @@ public class CustomerTable extends CustomComponent {
         removeCustomer.setEnabled(false);
         editCustomer.setEnabled(false);
 
-        HorizontalLayout buttonLayout = new HorizontalLayout();
-        buttonLayout.setSpacing(true);
-
-        buttonLayout.addComponents(addCustomer, removeCustomer, editCustomer);
+        HorizontalLayout buttonLayout = new MHorizontalLayout(addCustomer, removeCustomer, editCustomer);
 
         layout.addComponents(buttonLayout, customerTable);
         layout.expand(customerTable);
