@@ -8,6 +8,7 @@ import javax.enterprise.inject.Instance;
 import javax.inject.Inject;
 
 import org.vaadin.example.AbstractView;
+import org.vaadin.example.ViewMenuItem;
 import org.vaadin.example.backend.entity.Customer;
 
 import com.vaadin.cdi.CDIView;
@@ -16,6 +17,7 @@ import com.vaadin.ui.Notification.Type;
 
 @CDIView("customers")
 @RolesAllowed({ "admin", "user" })
+@ViewMenuItem(title="Customers")
 public class CustomerViewImpl extends AbstractView<CustomerViewPresenter>
         implements CustomerView {
 

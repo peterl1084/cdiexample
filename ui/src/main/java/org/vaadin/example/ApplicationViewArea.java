@@ -2,6 +2,7 @@ package org.vaadin.example;
 
 import javax.inject.Inject;
 
+import com.vaadin.cdi.CDIView;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewDisplay;
 import com.vaadin.ui.Component;
@@ -24,8 +25,9 @@ public class ApplicationViewArea implements ViewDisplay {
     public void showView(View view) {
         if (view instanceof ApplicationView) {
             ApplicationView applicationView = (ApplicationView) view;
-            navigationEvent.fire(new ViewNavigationEvent(applicationView
-                    .getName()));
+            CDIView cdiView = view.getClass().getAnnotation(CDIView.class);
+			navigationEvent.fire(new ViewNavigationEvent(applicationView
+					.getName(), cdiView.value()));
         }
 
         container.setContent((Component) view);

@@ -4,6 +4,7 @@ import javax.enterprise.inject.Instance;
 import javax.inject.Inject;
 
 import org.vaadin.example.AbstractView;
+import org.vaadin.example.ViewMenuItem;
 import org.vaadin.maddon.button.PrimaryButton;
 import org.vaadin.maddon.fields.MTextField;
 import org.vaadin.maddon.layouts.MVerticalLayout;
@@ -19,6 +20,7 @@ import com.vaadin.ui.PasswordField;
 import com.vaadin.ui.TextField;
 
 @CDIView
+@ViewMenuItem(enabled = false)
 public class LoginViewImpl extends AbstractView<LoginViewPresenter> implements
         LoginView {
 

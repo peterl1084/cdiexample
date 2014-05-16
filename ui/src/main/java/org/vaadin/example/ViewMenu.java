@@ -5,19 +5,14 @@
  */
 package org.vaadin.example;
 
-import com.vaadin.cdi.CDIView;
-import com.vaadin.navigator.View;
-import com.vaadin.ui.Button;
-import com.vaadin.ui.Button.ClickEvent;
-import com.vaadin.ui.Button.ClickListener;
-import com.vaadin.ui.Component;
-import com.vaadin.ui.UI;
-
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.annotation.PostConstruct;
+import javax.enterprise.context.Dependent;
 import javax.enterprise.context.SessionScoped;
 import javax.enterprise.inject.Any;
 import javax.enterprise.inject.spi.Bean;
@@ -25,12 +20,18 @@ import javax.enterprise.inject.spi.BeanManager;
 import javax.enterprise.util.AnnotationLiteral;
 import javax.inject.Inject;
 
-import org.vaadin.example.login.LoginView;
 import org.vaadin.example.login.LoginViewImpl;
 import org.vaadin.maddon.button.MButton;
 import org.vaadin.maddon.label.Header;
-import org.vaadin.maddon.layouts.MHorizontalLayout;
 import org.vaadin.maddon.layouts.MVerticalLayout;
+
+import com.vaadin.cdi.CDIView;
+import com.vaadin.navigator.View;
+import com.vaadin.ui.Button;
+import com.vaadin.ui.Button.ClickEvent;
+import com.vaadin.ui.Button.ClickListener;
+import com.vaadin.ui.Component;
+import com.vaadin.ui.UI;
 
 /**
  * A helper to automatically create a menu from available Vaadin CDI view.
@@ -40,8 +41,8 @@ import org.vaadin.maddon.layouts.MVerticalLayout;
  * 
  * @author Matti Tahvonen <matti@vaadin.com>
  */
-@SessionScoped
-public class ViewMenu implements Serializable {
+@Dependent
+public class ViewMenu extends MVerticalLayout {
     
     @Inject
     BeanManager beanManager;
@@ -50,32 +51,38 @@ public class ViewMenu implements Serializable {
         Set<Bean<?>> all = beanManager.getBeans(View.class,
                 new AnnotationLiteral<Any>() {
                 });
+        
         // TODO check if accessible for current user
         return all;
     }
     
-    public Component getBasicMenu() {
-    	return new MVerticalLayout(
-    			new Header("Navigation").setHeaderLevel(3))
-    				.with(getAsLinkButtons(getAvailableViews())).withWidth("200px").withSpacing(false);
+    @PostConstruct
+    void init() {
+    	addComponent(new Header("Navigation").setHeaderLevel(3));
+    	addComponents(getAsLinkButtons(getAvailableViews()));
+		withWidth("200px").withSpacing(false);
     }
     
-    
-    private Set<Class<?>> hiddenViews = new HashSet<Class<?>>();
-    {
-    	hiddenViews.add(LoginViewImpl.class);
-    }
+    private HashMap<String,Button> nameToButton = new HashMap<>();
+	private Button active;
     
     private Component[] getAsLinkButtons(
             Set<Bean<?>> availableViews) {
         ArrayList<Button> buttons = new ArrayList<>();
         for (Bean<?> viewBean : availableViews) {
         	
-        	
             Class<?> beanClass = viewBean.getBeanClass();
-            if (beanClass.getAnnotation(CDIView.class) != null 
-            		&& !hiddenViews.contains(beanClass)) {
-                buttons.add(getButtonFor(beanClass));
+            
+        	ViewMenuItem annotation = beanClass.getAnnotation(ViewMenuItem.class);
+        	if(annotation != null && !annotation.enabled()) {
+        		continue;
+        	}
+        	
+            if (beanClass.getAnnotation(CDIView.class) != null) {
+                MButton button = getButtonFor(beanClass);
+                CDIView view = beanClass.getAnnotation(CDIView.class);
+                nameToButton.put(view.value(), button);
+				buttons.add(button);
             }
         }
         return buttons.toArray(new Button[0]);
@@ -95,6 +102,10 @@ public class ViewMenu implements Serializable {
     }
     
     protected String getNameFor(Class<?> viewType) {
+    	ViewMenuItem annotation = viewType.getAnnotation(ViewMenuItem.class);
+    	if(annotation != null) {
+    		return annotation.title();
+    	}
 //    	if (viewType instanceof ApplicationView) {
 //			ApplicationView av = (ApplicationView) viewType;
 //			return av.getName();
@@ -102,4 +113,14 @@ public class ViewMenu implements Serializable {
 //		}
         return viewType.getSimpleName();
     }
+
+	public void setActive(String viewId) {
+		if(active != null) {
+			active.setEnabled(true);
+		}
+		active = nameToButton.get(viewId);
+		if(active != null) {
+			active.setEnabled(false);
+		}
+	}
 }

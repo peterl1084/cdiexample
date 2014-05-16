@@ -4,6 +4,7 @@ import javax.enterprise.inject.Instance;
 import javax.inject.Inject;
 
 import org.vaadin.example.AbstractView;
+import org.vaadin.example.ViewMenuItem;
 import org.vaadin.maddon.layouts.MVerticalLayout;
 
 import com.vaadin.cdi.CDIView;
@@ -13,6 +14,7 @@ import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.Label;
 
 @CDIView("example")
+@ViewMenuItem(title="Example view")
 public class ExampleViewImpl extends AbstractView<ExampleViewPresenter> implements
         ExampleView {
 
