@@ -8,6 +8,8 @@ import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
 import org.vaadin.example.login.UserLoggedInEvent;
 import org.vaadin.maddon.label.Header;
+import org.vaadin.maddon.layouts.MHorizontalLayout;
+import org.vaadin.maddon.layouts.MVerticalLayout;
 
 import com.vaadin.annotations.Theme;
 import com.vaadin.cdi.CDIUI;
@@ -18,10 +20,8 @@ import com.vaadin.server.VaadinRequest;
 import com.vaadin.server.VaadinSession;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
-import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.UI;
-import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.themes.ChameleonTheme;
 
 @CDIUI
@@ -33,8 +33,6 @@ public class VaadinUI extends UI {
 
     @Inject
     private CDIViewProvider viewProvider;
-
-    private HorizontalLayout topBar;
 
     private Button logout;
 
@@ -56,27 +54,18 @@ public class VaadinUI extends UI {
 
     @Override
     protected void init(VaadinRequest request) {
-        VerticalLayout layout = new VerticalLayout();
-        layout.setSizeFull();
-        layout.setMargin(true);
-
-        topBar = new HorizontalLayout();
-        topBar.setWidth(100, Unit.PERCENTAGE);
-        topBar.setSpacing(true);
-
-        header = new Header("Welcome, please login");
+        header = new Header("").setHeaderLevel(2);
         header.setWidth(100, Unit.PERCENTAGE);
 
         logout = new Button("Logout", logoutClickListener);
         logout.setStyleName(ChameleonTheme.BUTTON_LINK);
 
-        topBar.addComponents(header, logout);
-        topBar.setExpandRatio(header, 1);
-
-        layout.addComponents(topBar, viewArea.getViewContainer());
-        layout.setExpandRatio(viewArea.getViewContainer(), 1);
-
-        setContent(layout);
+        setContent(
+        		new MVerticalLayout(
+        				new MHorizontalLayout(header, logout).withFullWidth().expand(header), 
+        				viewArea.getViewContainer()
+        		).withFullHeight().expand(viewArea.getViewContainer())
+        );
 
         navigator = new Navigator(this, viewArea);
         navigator.addProvider(viewProvider);
