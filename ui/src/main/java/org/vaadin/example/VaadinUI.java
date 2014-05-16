@@ -20,6 +20,8 @@ import com.vaadin.server.VaadinRequest;
 import com.vaadin.server.VaadinSession;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
+import com.vaadin.ui.Component;
+import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.themes.ChameleonTheme;
@@ -30,6 +32,9 @@ public class VaadinUI extends UI {
     private static final long serialVersionUID = 3618386613849364696L;
 
     private Navigator navigator;
+    
+    @Inject 
+    private ViewMenu viewMenu;
 
     @Inject
     private CDIViewProvider viewProvider;
@@ -52,25 +57,34 @@ public class VaadinUI extends UI {
         }
     };
 
+	private Component basicMenu;
+
     @Override
     protected void init(VaadinRequest request) {
+		basicMenu = viewMenu.getBasicMenu();
+
         header = new Header("").setHeaderLevel(2);
         header.setWidth(100, Unit.PERCENTAGE);
 
         logout = new Button("Logout", logoutClickListener);
         logout.setStyleName(ChameleonTheme.BUTTON_LINK);
 
-        setContent(
-        		new MVerticalLayout(
-        				new MHorizontalLayout(header, logout).withFullWidth().expand(header), 
-        				viewArea.getViewContainer()
-        		).withFullHeight().expand(viewArea.getViewContainer())
+        MVerticalLayout mainLayout = new MVerticalLayout(
+				new MHorizontalLayout(header, logout).withFullWidth().expand(header), 
+				viewArea.getViewContainer()
+		).withFullHeight().expand(viewArea.getViewContainer());
+		setContent(
+        		new MHorizontalLayout(
+        			basicMenu,
+	        		mainLayout
+        		).withFullHeight().withFullWidth().expand(mainLayout)
         );
 
         navigator = new Navigator(this, viewArea);
         navigator.addProvider(viewProvider);
 
         if (!isLoggedIn()) {
+        	basicMenu.setVisible(false);
             navigator.navigateTo("");
             logout.setVisible(false);
         } else {
@@ -101,5 +115,8 @@ public class VaadinUI extends UI {
     public void onViewNavigated(
             @Observes(notifyObserver = Reception.IF_EXISTS) ViewNavigationEvent event) {
         header.setText(event.getViewName());
+        if(isLoggedIn()) {
+        	basicMenu.setVisible(true);
+        }
     }
 }
