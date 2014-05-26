@@ -40,11 +40,6 @@ public class ExampleViewImpl extends AbstractView<ExampleViewPresenter> implemen
         return presenterInstance.get();
     }
 
-    @Override
-    public String getName() {
-        return "Example";
-    }
-
 	@Override
 	public void setMessage(String message) {
 		state.setValue(message);

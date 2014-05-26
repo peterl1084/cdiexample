@@ -12,12 +12,13 @@ import org.vaadin.example.ViewMenuItem;
 import org.vaadin.example.backend.entity.Customer;
 
 import com.vaadin.cdi.CDIView;
+import com.vaadin.server.FontAwesome;
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.Notification.Type;
 
 @CDIView("customers")
 @RolesAllowed({ "admin", "user" })
-@ViewMenuItem(title="Customers")
+@ViewMenuItem(title="Customers", order = ViewMenuItem.BEGINNING, icon = FontAwesome.USERS)
 public class CustomerViewImpl extends AbstractView<CustomerViewPresenter>
         implements CustomerView {
 
@@ -55,11 +56,6 @@ public class CustomerViewImpl extends AbstractView<CustomerViewPresenter>
     @Override
     public void closeEditor() {
         customerEditor.close();
-    }
-
-    @Override
-    public String getName() {
-        return "Customers";
     }
 
     @Override

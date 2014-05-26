@@ -38,4 +38,15 @@ public abstract class AbstractView<P extends AbstractPresenter> extends
     public P getPresenter() {
         return presenter;
     }
+
+    @Override
+    public String getName() {
+        ViewMenuItem annotation = getClass().getAnnotation(ViewMenuItem.class);
+        if(annotation != null) {
+            return annotation.title();
+        } else {
+            return getClass().getSimpleName();
+        }
+    }
+    
 }
