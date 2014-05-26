@@ -1,15 +1,9 @@
 package org.vaadin.example.customer;
 
-import javax.inject.Inject;
-
-import org.apache.shiro.SecurityUtils;
-import org.vaadin.example.backend.entity.Customer;
-import org.vaadin.maddon.fields.MTextField;
-import org.vaadin.maddon.form.AbstractForm;
-import org.vaadin.maddon.layouts.MVerticalLayout;
-
 import com.vaadin.data.fieldgroup.PropertyId;
+import com.vaadin.server.FontAwesome;
 import com.vaadin.ui.Alignment;
+import com.vaadin.ui.Button;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.DateField;
 import com.vaadin.ui.FormLayout;
@@ -18,6 +12,12 @@ import com.vaadin.ui.OptionGroup;
 import com.vaadin.ui.PasswordField;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
+import javax.inject.Inject;
+import org.apache.shiro.SecurityUtils;
+import org.vaadin.example.backend.entity.Customer;
+import org.vaadin.maddon.fields.MTextField;
+import org.vaadin.maddon.form.AbstractForm;
+import org.vaadin.maddon.layouts.MVerticalLayout;
 
 public class CustomerForm extends AbstractForm<Customer> {
     private static final long serialVersionUID = -1684898560662964709L;
@@ -76,6 +76,10 @@ public class CustomerForm extends AbstractForm<Customer> {
 
         roles.setItemCaption("admin", "Admin");
         roles.setItemCaption("user", "User");
+        
+        userName.setIcon(FontAwesome.USER);
+        
+        roles.setIcon(FontAwesome.USERS);
 
         formLayout = new FormLayout(userName, firstName, lastName, birthDate,
                 roles);
@@ -139,4 +143,21 @@ public class CustomerForm extends AbstractForm<Customer> {
             }
         }
     }
+
+    @Override
+    protected Component createSaveButton() {
+        Button b = (Button) super.createSaveButton();
+        b.setIcon(FontAwesome.FLOPPY_O);
+        return b;
+    }
+
+    @Override
+    protected Component createCancelButton() {
+        Button b = (Button) super.createCancelButton();
+        b.setIcon(FontAwesome.UNDO);
+        return b;
+    }
+    
+    
+    
 }

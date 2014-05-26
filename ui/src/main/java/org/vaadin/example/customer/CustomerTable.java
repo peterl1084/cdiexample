@@ -108,13 +108,13 @@ public class CustomerTable extends CustomComponent {
         customerTable.setConverter("birthDate", new CustomerTableDateFormat());
         customerTable.setSizeFull();
 
-        addCustomer = new MButton(FontAwesome.PLUS, addClickListener);
+        addCustomer = new MButton(FontAwesome.FILE_O, addClickListener);
 
         removeCustomer = new ConfirmButton(null,
                 "Are you sure you want to remove this customer?",
                 removeClickListener);
-        removeCustomer.setIcon(FontAwesome.MINUS);
-        editCustomer = new MButton(FontAwesome.PENCIL_SQUARE, editClickListener);
+        removeCustomer.setIcon(FontAwesome.TRASH_O);
+        editCustomer = new MButton(FontAwesome.PENCIL_SQUARE_O, editClickListener);
 
         removeCustomer.setEnabled(false);
         editCustomer.setEnabled(false);

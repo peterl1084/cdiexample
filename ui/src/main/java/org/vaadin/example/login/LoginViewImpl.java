@@ -10,6 +10,7 @@ import org.vaadin.maddon.fields.MTextField;
 import org.vaadin.maddon.layouts.MVerticalLayout;
 
 import com.vaadin.cdi.CDIView;
+import com.vaadin.server.FontAwesome;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
@@ -47,6 +48,8 @@ public class LoginViewImpl extends AbstractView<LoginViewPresenter> implements
 
     public LoginViewImpl() {
         setSizeFull();
+        
+        login.setIcon(FontAwesome.HAND_O_RIGHT);
 
         // TODO remove these prefilled values used for testing
         username.setValue("admin");
