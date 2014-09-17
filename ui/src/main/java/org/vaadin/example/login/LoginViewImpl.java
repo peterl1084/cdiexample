@@ -1,14 +1,5 @@
 package org.vaadin.example.login;
 
-import javax.enterprise.inject.Instance;
-import javax.inject.Inject;
-
-import org.vaadin.example.AbstractView;
-import org.vaadin.example.ViewMenuItem;
-import org.vaadin.maddon.button.PrimaryButton;
-import org.vaadin.maddon.fields.MTextField;
-import org.vaadin.maddon.layouts.MVerticalLayout;
-
 import com.vaadin.cdi.CDIView;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.ui.Alignment;
@@ -19,12 +10,19 @@ import com.vaadin.ui.Notification.Type;
 import com.vaadin.ui.Panel;
 import com.vaadin.ui.PasswordField;
 import com.vaadin.ui.TextField;
+import javax.enterprise.inject.Instance;
+import javax.inject.Inject;
+import org.vaadin.example.AbstractView;
+import org.vaadin.example.ViewMenuItem;
+import org.vaadin.maddon.button.PrimaryButton;
+import org.vaadin.maddon.fields.MTextField;
+import org.vaadin.maddon.layouts.MVerticalLayout;
 
-@CDIView
+@CDIView(LoginView.ID)
 @ViewMenuItem(enabled = false)
 public class LoginViewImpl extends AbstractView<LoginViewPresenter> implements
         LoginView {
-
+    
     private static final long serialVersionUID = -4954635993174003879L;
 
     @Inject

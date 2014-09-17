@@ -9,6 +9,7 @@ import java.util.Set;
 
 import com.vaadin.data.util.converter.Converter;
 
+// TODO looks like a pretty generic helper, move to Maddon
 public class CollectionToCommaSeparatedStringConverter implements
         Converter<Object, String> {
 

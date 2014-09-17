@@ -20,13 +20,14 @@ import com.vaadin.server.VaadinRequest;
 import com.vaadin.server.VaadinSession;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
-import com.vaadin.ui.Component;
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.themes.ChameleonTheme;
+import org.vaadin.example.customer.CustomerView;
+import org.vaadin.example.login.LoginView;
 
-@CDIUI
-@Theme("dawn")
+@CDIUI("")
+@Theme("valo")
 public class VaadinUI extends UI {
     private static final long serialVersionUID = 3618386613849364696L;
 
@@ -80,11 +81,11 @@ public class VaadinUI extends UI {
 
         if (!isLoggedIn()) {
         	viewMenu.setVisible(false);
-            navigator.navigateTo("");
+            navigator.navigateTo(LoginView.ID);
             logout.setVisible(false);
         } else {
             if (navigator.getState().isEmpty()) {
-                navigator.navigateTo("customers");
+                navigator.navigateTo(CustomerView.ID);
                 logout.setVisible(true);
             }
         }

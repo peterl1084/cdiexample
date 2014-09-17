@@ -15,6 +15,7 @@ import com.vaadin.ui.VerticalLayout;
 import javax.inject.Inject;
 import org.apache.shiro.SecurityUtils;
 import org.vaadin.example.backend.entity.Customer;
+import org.vaadin.maddon.MBeanFieldGroup;
 import org.vaadin.maddon.fields.MTextField;
 import org.vaadin.maddon.form.AbstractForm;
 import org.vaadin.maddon.layouts.MVerticalLayout;
@@ -66,6 +67,8 @@ public class CustomerForm extends AbstractForm<Customer> {
     };
 
     public CustomerForm() {
+        // Make the form validate on the fly and enable save cancel buttons intelligently
+        setEagarValidation(true);
         setSavedHandler(formSaveHandler);
         setResetHandler(formResetHandler);
 
@@ -86,9 +89,10 @@ public class CustomerForm extends AbstractForm<Customer> {
     }
 
     @Override
-    public void setEntity(Customer entity) {
-        super.setEntity(entity);
+    public MBeanFieldGroup<Customer> setEntity(Customer entity) {
+        MBeanFieldGroup<Customer> fg = super.setEntity(entity);
 
+        // Customize the forms password stuff slightly based on its state
         if (entity.isPersisted()) {
             formLayout.addComponent(passwordField);
             formLayout.addComponent(passwordConfirmationField);
@@ -99,6 +103,7 @@ public class CustomerForm extends AbstractForm<Customer> {
             formLayout.addComponent(passwordField, 1);
             formLayout.addComponent(passwordConfirmationField, 2);
         }
+        return fg;
     }
 
     @Override
@@ -129,8 +134,16 @@ public class CustomerForm extends AbstractForm<Customer> {
         return customerSavedEvent;
     }
 
+    /**
+     * Only admin role is allowed to edit
+     * 
+     * @param formLayout
+     * @param toolbar 
+     */
     private void hideToolbarFromNonAdminUsers(FormLayout formLayout,
             Layout toolbar) {
+        // TODO AbstractForm in Maddon should have overridden setReadOnly
+        // method that would do this
         if (SecurityUtils.getSubject().hasRole("admin")) {
             toolbar.setVisible(true);
             for (Component component : formLayout) {
@@ -143,17 +156,17 @@ public class CustomerForm extends AbstractForm<Customer> {
             }
         }
     }
-
+    
     @Override
-    protected Component createSaveButton() {
-        Button b = (Button) super.createSaveButton();
+    protected Button createSaveButton() {
+        Button b = super.createSaveButton();
         b.setIcon(FontAwesome.FLOPPY_O);
         return b;
     }
 
     @Override
-    protected Component createCancelButton() {
-        Button b = (Button) super.createCancelButton();
+    protected Button createCancelButton() {
+        Button b = super.createCancelButton();
         b.setIcon(FontAwesome.UNDO);
         return b;
     }

@@ -6,6 +6,8 @@ import org.vaadin.example.ApplicationView;
 import org.vaadin.example.backend.entity.Customer;
 
 public interface CustomerView extends ApplicationView<CustomerViewPresenter> {
+    
+    public static final String ID = "customers";
 
     void removeTableSelection();
 

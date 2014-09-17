@@ -13,7 +13,7 @@ import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.Label;
 
-@CDIView("example")
+@CDIView(ExampleView.ID)
 @ViewMenuItem(title="Example view")
 public class ExampleViewImpl extends AbstractView<ExampleViewPresenter> implements
         ExampleView {

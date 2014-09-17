@@ -20,6 +20,7 @@ public class BuiltInIcons extends AbstractView<ExampleViewPresenter> implements
     private Instance<ExampleViewPresenter> presenterInstance;
 
     public BuiltInIcons() {
+        setHeightUndefined();
 
         // All of FontAwesome
         StringBuilder sb = new StringBuilder();
