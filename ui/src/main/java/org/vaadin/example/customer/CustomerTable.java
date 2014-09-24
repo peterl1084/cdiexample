@@ -110,10 +110,9 @@ public class CustomerTable extends CustomComponent {
 
         addCustomer = new MButton(FontAwesome.FILE_O, addClickListener);
 
-        removeCustomer = new ConfirmButton(null,
+        removeCustomer = new ConfirmButton(FontAwesome.TRASH_O,
                 "Are you sure you want to remove this customer?",
                 removeClickListener);
-        removeCustomer.setIcon(FontAwesome.TRASH_O);
         editCustomer = new MButton(FontAwesome.PENCIL_SQUARE_O, editClickListener);
 
         removeCustomer.setEnabled(false);
