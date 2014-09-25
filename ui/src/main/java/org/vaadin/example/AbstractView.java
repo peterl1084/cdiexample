@@ -1,5 +1,6 @@
 package org.vaadin.example;
 
+import com.vaadin.cdi.CDIView;
 import javax.annotation.PostConstruct;
 
 import com.vaadin.navigator.View;
@@ -42,11 +43,21 @@ public abstract class AbstractView<P extends AbstractPresenter> extends
     @Override
     public String getName() {
         ViewMenuItem annotation = getClass().getAnnotation(ViewMenuItem.class);
-        if(annotation != null) {
+        if (annotation != null) {
             return annotation.title();
         } else {
             return getClass().getSimpleName();
         }
     }
-    
+
+    @Override
+    public String getId() {
+        // Use view id/address as the id by default
+        CDIView annotation = getClass().getAnnotation(CDIView.class);
+        if (annotation != null) {
+            return annotation.value();
+        }
+        return super.getId();
+    }
+
 }
