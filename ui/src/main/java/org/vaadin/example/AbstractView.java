@@ -6,6 +6,7 @@ import javax.annotation.PostConstruct;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.ui.CustomComponent;
+import org.vaadin.cdiviewmenu.ViewMenuItem;
 
 public abstract class AbstractView<P extends AbstractPresenter> extends
         CustomComponent implements ApplicationView<P>, View {

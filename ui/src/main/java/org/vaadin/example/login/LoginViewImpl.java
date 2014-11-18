@@ -13,7 +13,7 @@ import com.vaadin.ui.TextField;
 import javax.enterprise.inject.Instance;
 import javax.inject.Inject;
 import org.vaadin.example.AbstractView;
-import org.vaadin.example.ViewMenuItem;
+import org.vaadin.cdiviewmenu.ViewMenuItem;
 import org.vaadin.maddon.button.PrimaryButton;
 import org.vaadin.maddon.fields.MTextField;
 import org.vaadin.maddon.layouts.MVerticalLayout;

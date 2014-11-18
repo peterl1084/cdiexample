@@ -8,7 +8,7 @@ import javax.enterprise.inject.Instance;
 import javax.inject.Inject;
 
 import org.vaadin.example.AbstractView;
-import org.vaadin.example.ViewMenuItem;
+import org.vaadin.cdiviewmenu.ViewMenuItem;
 import org.vaadin.example.backend.entity.Customer;
 
 import com.vaadin.cdi.CDIView;

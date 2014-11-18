@@ -7,7 +7,7 @@ import com.vaadin.ui.Label;
 import javax.enterprise.inject.Instance;
 import javax.inject.Inject;
 import org.vaadin.example.AbstractView;
-import org.vaadin.example.ViewMenuItem;
+import org.vaadin.cdiviewmenu.ViewMenuItem;
 import org.vaadin.maddon.label.RichText;
 import org.vaadin.maddon.layouts.MVerticalLayout;
 

@@ -4,7 +4,7 @@ import javax.enterprise.inject.Instance;
 import javax.inject.Inject;
 
 import org.vaadin.example.AbstractView;
-import org.vaadin.example.ViewMenuItem;
+import org.vaadin.cdiviewmenu.ViewMenuItem;
 import org.vaadin.maddon.layouts.MVerticalLayout;
 
 import com.vaadin.cdi.CDIView;

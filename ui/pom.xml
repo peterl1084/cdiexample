@@ -30,17 +30,13 @@
 			<artifactId>vaadin-client-compiled</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>com.vaadin</groupId>
-			<artifactId>vaadin-cdi</artifactId>
+			<groupId>org.vaadin</groupId>
+			<artifactId>cdi-helpers</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.vaadin</groupId>
 			<artifactId>backend</artifactId>
 			<version>${project.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.peimari</groupId>
-			<artifactId>maddon</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.shiro</groupId>
