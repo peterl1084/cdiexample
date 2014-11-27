@@ -10,6 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.NotNull;
 
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authz.AuthorizationInfo;
@@ -18,7 +19,7 @@ import org.vaadin.example.backend.authentication.UserAuthenticationInfo;
 import org.vaadin.example.backend.authentication.UserAuthorizationInfo;
 
 @Entity
-@Table(name = "Customer")
+@Table(name = "cdiexamplecustomer")
 public class Customer extends AbstractEntity {
 
     @Id
@@ -26,20 +27,18 @@ public class Customer extends AbstractEntity {
     @Column(name = "Id", nullable = false)
     private Long id;
 
-    @Column(name = "Firstname")
     private String firstName;
 
-    @Column(name = "Lastname")
     private String lastName;
 
-    @Column(name = "Birthdate")
     @Temporal(TemporalType.DATE)
     private Date birthDate;
 
+    @NotNull
     @Column(name = "Username", nullable = false)
     private String username;
 
-    @Column(name = "Password", nullable = false)
+    @Column(name = "pw", nullable = false)
     private String password;
 
     @Column(name = "roles", nullable = false)

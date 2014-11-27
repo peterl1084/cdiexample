@@ -15,18 +15,12 @@ import com.vaadin.server.VaadinRequest;
 import com.vaadin.server.VaadinSession;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
-import com.vaadin.ui.CssLayout;
-import com.vaadin.ui.Label;
-import com.vaadin.ui.MenuBar;
 import com.vaadin.ui.Notification;
-import com.vaadin.ui.themes.ChameleonTheme;
 import org.vaadin.cdiviewmenu.ViewMenuUI;
 import static org.vaadin.cdiviewmenu.ViewMenuUI.getMenu;
 import org.vaadin.example.customer.CustomerView;
 import org.vaadin.example.customer.CustomerViewImpl;
 import org.vaadin.example.login.LoginView;
-import org.vaadin.maddon.label.RichText;
-import org.vaadin.maddon.layouts.MVerticalLayout;
 
 @CDIUI("")
 @Theme("valo")
