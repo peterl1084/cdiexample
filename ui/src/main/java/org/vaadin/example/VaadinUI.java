@@ -52,6 +52,7 @@ public class VaadinUI extends ViewMenuUI {
             ViewMenuUI.getMenu().setVisible(false);
             ViewMenuUI.getMenu().navigateTo(LoginView.ID);
         } else {
+            ViewMenuUI.getMenu().addMenuItem(logout);
             if (getNavigator().getState().isEmpty()) {
                 ViewMenuUI.getMenu().navigateTo(CustomerViewImpl.class);
             }
